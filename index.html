@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fzzrix VPN</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #0b0e1a;
+            padding: 20px;
+        }
+        .card {
+            max-width: 400px;
+            margin: 0 auto;
+            background: #141b2b;
+            border-radius: 30px;
+            padding: 30px 20px;
+            text-align: center;
+        }
+        .title {
+            font-size: 28px;
+            color: white;
+            font-weight: bold;
+        }
+        .subtitle {
+            color: #8892b0;
+            margin-bottom: 20px;
+        }
+        .plan {
+            background: #1e273b;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        .plan-name {
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .plan-price {
+            color: #64ffda;
+            font-size: 18px;
+        }
+        .plan-desc {
+            color: #a8b2d1;
+            font-size: 14px;
+            margin: 10px 0;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 40px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .btn-free {
+            background: #1a6bff;
+        }
+        .btn-premium {
+            background: #6f3bff;
+        }
+        .btn-link {
+            background: #0f8b5e;
+        }
+        .vpn-box {
+            background: #0b0e1a;
+            padding: 15px;
+            border-radius: 14px;
+            margin: 15px 0;
+            border: 1px dashed #2a3a5c;
+            word-break: break-all;
+            color: #ccd6f6;
+        }
+        .hidden {
+            display: none;
+        }
+        .footer {
+            color: #49567a;
+            font-size: 13px;
+            margin-top: 20px;
+        }
+        .footer a {
+            color: #64ffda;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <div class="title">⚡ Fzzrix VPN</div>
+    <div class="subtitle">Выбери тариф</div>
+
+    <div class="plan">
+        <div class="plan-name">🆓 Бесплатно</div>
+        <div class="plan-price">0 ₽</div>
+        <div class="plan-desc">✅ Базовый доступ</div>
+        <button class="btn btn-free" onclick="showVPN()">🔑 Получить ссылку</button>
+    </div>
+
+    <div class="plan">
+        <div class="plan-name">💎 Премиум</div>
+        <div class="plan-price">50 ₽</div>
+        <div class="plan-desc">🚀 Максимальная скорость</div>
+        <a href="https://t.me/Fzzrix" class="btn btn-premium">📩 Купить у @Fzzrix</a>
+    </div>
+
+    <div id="vpnBlock" class="hidden">
+        <div class="vpn-box">
+            <a href="https://tri.su/nbAGa" target="_blank">https://tri.su/nbAGa</a>
+        </div>
+        <a href="https://tri.su/nbAGa" class="btn btn-link">🚀 Открыть ссылку</a>
+    </div>
+
+    <div class="footer">
+        По вопросам <a href="https://t.me/Fzzrix">@Fzzrix</a>
+    </div>
+</div>
+
+<script>
+    function showVPN() {
+        document.getElementById('vpnBlock').classList.remove('hidden');
+    }
+</script>
+
+</body>
+  </html>к
