@@ -5,52 +5,250 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fzzrix VPN</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: Arial, sans-serif;
-            background: #0b0e1a;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0a1628, #1a3a6b, #0d47a1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
             padding: 20px;
+            overflow: hidden;
+            position: relative;
         }
+
+        /* ===== ЧЁРНАЯ ДЫРА ===== */
+        .black-hole {
+            position: fixed;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .black-hole .shadow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle at 30% 30%, #1a1a3e, #000000);
+            box-shadow: 0 0 80px rgba(0, 0, 0, 0.9);
+        }
+
+        .black-hole .disk {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 280px;
+            height: 60px;
+            transform: translate(-50%, -50%) rotateX(60deg);
+            border-radius: 50%;
+            background: radial-gradient(ellipse, 
+                rgba(255, 220, 150, 0.9) 0%,
+                rgba(255, 180, 80, 0.6) 30%,
+                rgba(255, 100, 50, 0.3) 60%,
+                transparent 100%
+            );
+            box-shadow: 0 0 60px rgba(255, 200, 100, 0.6);
+        }
+
+        .black-hole .inner-disk {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 190px;
+            height: 35px;
+            transform: translate(-50%, -50%) rotateX(70deg);
+            border-radius: 50%;
+            background: radial-gradient(ellipse, 
+                rgba(255, 255, 220, 0.9) 0%,
+                rgba(255, 220, 150, 0.5) 40%,
+                transparent 100%
+            );
+            box-shadow: 0 0 40px rgba(255, 200, 100, 0.5);
+        }
+
+        .black-hole .glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 320px;
+            height: 320px;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            background: radial-gradient(circle, 
+                rgba(100, 200, 255, 0.2) 0%,
+                rgba(255, 200, 100, 0.1) 30%,
+                transparent 100%
+            );
+        }
+
+        /* ===== ЗЕМЛЯ ===== */
+        .earth {
+            position: fixed;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            z-index: 0;
+            pointer-events: none;
+            background: radial-gradient(circle at 30% 30%, #4fc3f7, #1565c0, #0d47a1);
+            box-shadow: 
+                0 0 40px rgba(50, 150, 255, 0.5),
+                inset -15px -15px 30px rgba(0, 0, 0, 0.4),
+                inset 10px 10px 20px rgba(255, 255, 255, 0.2);
+        }
+
+        .earth::before {
+            content: '';
+            position: absolute;
+            top: 20%;
+            left: 15%;
+            width: 30%;
+            height: 25%;
+            background: radial-gradient(ellipse, rgba(50, 220, 100, 0.6), transparent);
+            border-radius: 50%;
+            box-shadow: 
+                20px 30px 0 5px rgba(50, 220, 100, 0.3),
+                -30px 10px 0 8px rgba(50, 220, 100, 0.2);
+        }
+
+        .earth::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 45%;
+            width: 35%;
+            height: 20%;
+            background: radial-gradient(ellipse, rgba(50, 220, 100, 0.5), transparent);
+            border-radius: 50%;
+        }
+
+        /* ===== РАКЕТА ===== */
+        .rocket {
+            position: fixed;
+            font-size: 60px;
+            z-index: 0;
+            pointer-events: none;
+            filter: drop-shadow(0 0 20px rgba(255, 150, 50, 0.5));
+        }
+
+        .rocket-fire {
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 30px;
+            animation: fireBlast 0.15s ease-in-out infinite alternate;
+        }
+
+        @keyframes fireBlast {
+            0% { transform: translateX(-50%) scale(0.7); opacity: 0.6; }
+            100% { transform: translateX(-50%) scale(1.2); opacity: 1; }
+        }
+
+        /* ===== КАРТОЧКА (ЧИСТОЕ СТЕКЛО) ===== */
         .card {
-            max-width: 400px;
-            margin: 0 auto;
-            background: #141b2b;
-            border-radius: 30px;
-            padding: 30px 20px;
+            max-width: 420px;
+            width: 100%;
+            background: rgba(10, 30, 70, 0.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 40px;
+            padding: 40px 28px;
             text-align: center;
+            border: 2px solid rgba(100, 200, 255, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            position: relative;
+            z-index: 1;
         }
+
+        /* Чистое стекло - прозрачная рамка */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            right: -4px;
+            bottom: -4px;
+            border-radius: 44px;
+            background: linear-gradient(45deg, 
+                rgba(50, 200, 255, 0.4), 
+                rgba(255, 200, 50, 0.3),
+                rgba(255, 80, 80, 0.2),
+                rgba(50, 200, 255, 0.4)
+            );
+            background-size: 300% 300%;
+            z-index: -1;
+            animation: glassBorder 6s ease-in-out infinite;
+        }
+
+        @keyframes glassBorder {
+            0% { background-position: 0% 50%; opacity: 0.6; }
+            50% { background-position: 100% 50%; opacity: 1; }
+            100% { background-position: 0% 50%; opacity: 0.6; }
+        }
+
         .title {
-            font-size: 28px;
-            color: white;
+            font-size: 34px;
+            color: #ffffff;
             font-weight: bold;
+            text-shadow: 0 0 30px rgba(50, 150, 255, 0.3);
         }
+
         .subtitle {
-            color: #8892b0;
-            margin-bottom: 20px;
+            color: rgba(180, 220, 255, 0.9);
+            margin-bottom: 25px;
+            font-size: 17px;
+            letter-spacing: 1.5px;
         }
+
         .plan {
-            background: #1e273b;
-            border-radius: 20px;
+            background: rgba(10, 30, 70, 0.5);
+            border-radius: 24px;
             padding: 20px;
             margin-bottom: 15px;
+            border: 1px solid rgba(100, 200, 255, 0.15);
+            transition: all 0.3s ease;
         }
+
+        .plan:hover {
+            transform: scale(1.02);
+            border-color: rgba(255, 200, 50, 0.5);
+            box-shadow: 0 0 30px rgba(255, 150, 50, 0.15);
+        }
+
         .plan-name {
-            color: white;
+            color: #ffcc80;
             font-size: 20px;
             font-weight: bold;
         }
+
         .plan-price {
-            color: #64ffda;
-            font-size: 18px;
+            color: #ffd54f;
+            font-size: 20px;
+            font-weight: bold;
         }
+
         .plan-desc {
-            color: #a8b2d1;
+            color: rgba(180, 220, 255, 0.8);
             font-size: 14px;
-            margin: 10px 0;
+            margin: 8px 0;
         }
+
         .btn {
             display: block;
             width: 100%;
-            padding: 14px;
+            padding: 16px;
             border: none;
             border-radius: 40px;
             font-size: 16px;
@@ -58,76 +256,221 @@
             color: white;
             text-decoration: none;
             cursor: pointer;
-            margin-top: 10px;
+            margin-top: 12px;
+            transition: all 0.3s ease;
         }
+
         .btn-free {
-            background: #1a6bff;
+            background: linear-gradient(135deg, #c62828, #8e0000);
+            box-shadow: 0 8px 30px rgba(198, 40, 40, 0.4);
         }
+
+        .btn-free:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(198, 40, 40, 0.6);
+        }
+
         .btn-premium {
-            background: #6f3bff;
+            background: linear-gradient(135deg, #e65100, #bf360c);
+            box-shadow: 0 8px 30px rgba(230, 81, 0, 0.4);
         }
+
+        .btn-premium:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(230, 81, 0, 0.6);
+        }
+
         .btn-link {
-            background: #0f8b5e;
+            background: linear-gradient(135deg, #f9a825, #f57f17);
+            box-shadow: 0 8px 30px rgba(249, 168, 37, 0.4);
+            color: #0a1628;
         }
+
+        .btn-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(249, 168, 37, 0.6);
+        }
+
         .vpn-box {
-            background: #0b0e1a;
-            padding: 15px;
-            border-radius: 14px;
+            background: rgba(10, 30, 70, 0.5);
+            padding: 16px;
+            border-radius: 16px;
             margin: 15px 0;
-            border: 1px dashed #2a3a5c;
+            border: 1px dashed rgba(255, 200, 50, 0.3);
             word-break: break-all;
-            color: #ccd6f6;
+            color: #ffcc80;
         }
+
+        .vpn-box a {
+            color: #ffd54f;
+            text-decoration: none;
+        }
+
         .hidden {
             display: none;
         }
+
         .footer {
-            color: #49567a;
+            color: rgba(150, 200, 255, 0.6);
             font-size: 13px;
             margin-top: 20px;
         }
+
         .footer a {
-            color: #64ffda;
+            color: #ffd54f;
+            text-decoration: none;
+        }
+
+        .instruction {
+            background: rgba(10, 30, 70, 0.5);
+            border-radius: 24px;
+            padding: 20px;
+            margin-top: 15px;
+            border: 1px solid rgba(255, 200, 50, 0.15);
+            text-align: left;
+            color: rgba(180, 220, 255, 0.9);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .instruction h3 {
+            color: #ffcc80;
+            text-align: center;
+            margin-bottom: 12px;
+            font-size: 18px;
+        }
+
+        .instruction ol {
+            padding-left: 22px;
+        }
+
+        .instruction a {
+            color: #ffd54f;
+            text-decoration: none;
         }
     </style>
 </head>
 <body>
 
-<div class="card">
-    <div class="title">⚡ Fzzrix VPN</div>
-    <div class="subtitle">Выбери тариф</div>
-
-    <div class="plan">
-        <div class="plan-name">🆓 Бесплатно</div>
-        <div class="plan-price">0 ₽</div>
-        <div class="plan-desc">✅ Базовый доступ</div>
-        <button class="btn btn-free" onclick="showVPN()">🔑 Получить ссылку</button>
+    <!-- ===== ЧЁРНАЯ ДЫРА ===== -->
+    <div class="black-hole" id="blackHole">
+        <div class="shadow"></div>
+        <div class="disk" id="disk"></div>
+        <div class="inner-disk" id="innerDisk"></div>
+        <div class="glow"></div>
     </div>
 
-    <div class="plan">
-        <div class="plan-name">💎 Премиум</div>
-        <div class="plan-price">50 ₽</div>
-        <div class="plan-desc">🚀 Максимальная скорость</div>
-        <a href="https://t.me/Fzzrix" class="btn btn-premium">📩 Купить у @Fzzrix</a>
+    <!-- ===== РАКЕТА ===== -->
+    <div class="rocket" id="rocket">
+        🚀
+        <span class="rocket-fire">🔥</span>
     </div>
 
-    <div id="vpnBlock" class="hidden">
-        <div class="vpn-box">
-            <a href="https://tri.su/nbAGa" target="_blank">https://tri.su/nbAGa</a>
+    <!-- ===== ЗЕМЛЯ ===== -->
+    <div class="earth" id="earth"></div>
+
+    <!-- ===== КАРТОЧКА ===== -->
+    <div class="card">
+        <div class="title">⚡ Fzzrix VPN</div>
+        <div class="subtitle">Выбери тариф</div>
+
+        <div class="plan">
+            <div class="plan-name">🆓 Бесплатно</div>
+            <div class="plan-price">0 ₽</div>
+            <div class="plan-desc">✅ Базовый доступ</div>
+            <button class="btn btn-free" onclick="showVPN()">🔑 Получить ссылку</button>
         </div>
-        <a href="https://tri.su/nbAGa" class="btn btn-link">🚀 Открыть ссылку</a>
+
+        <div class="plan">
+            <div class="plan-name">💎 Премиум</div>
+            <div class="plan-price">50 ₽</div>
+            <div class="plan-desc">🚀 Максимальная скорость</div>
+            <a href="https://t.me/Fzzrix" class="btn btn-premium">📩 Купить у @Fzzrix</a>
+        </div>
+
+        <div id="vpnBlock" class="hidden">
+            <div class="vpn-box">
+                <a href="https://tri.su/nbAGa" target="_blank">https://tri.su/nbAGa</a>
+            </div>
+            <a href="https://tri.su/nbAGa" class="btn btn-link">🚀 Открыть ссылку</a>
+        </div>
+
+        <div class="instruction">
+            <h3>📥 Как подключить VPN</h3>
+            <ol>
+                <li>Скачай <strong>Happ Proxy Utility</strong>:
+                    <br>• <a href="https://apps.apple.com/us/app/happ-proxy-utility/id6504287215?l=ru" target="_blank">iPhone (App Store)</a>
+                    <br>• <a href="https://play.google.com/store/apps/details?id=com.happproxy" target="_blank">Android (Google Play)</a>
+                </li>
+                <li>Нажми <strong>«Бесплатно»</strong> → получи ссылку</li>
+                <li>Скопируй ссылку и добавь в приложение</li>
+            </ol>
+        </div>
+
+        <div class="footer">
+            По вопросам <a href="https://t.me/Fzzrix">@Fzzrix</a>
+        </div>
     </div>
 
-    <div class="footer">
-        По вопросам <a href="https://t.me/Fzzrix">@Fzzrix</a>
-    </div>
-</div>
+    <script>
+        function showVPN() {
+            document.getElementById('vpnBlock').classList.remove('hidden');
+        }
 
-<script>
-    function showVPN() {
-        document.getElementById('vpnBlock').classList.remove('hidden');
-    }
-</script>
+        // ============================================
+        // 120 FPS АНИМАЦИЯ
+        // ============================================
+
+        const blackHole = document.getElementById('blackHole');
+        const disk = document.getElementById('disk');
+        const innerDisk = document.getElementById('innerDisk');
+        const earth = document.getElementById('earth');
+        const rocket = document.getElementById('rocket');
+
+        let bhX = 5, bhY = 5, bhDirX = 1, bhDirY = 1;
+        let earthX = 80, earthY = 15, earthDirX = -1, earthDirY = 1;
+        let rocketX = 5, rocketY = 80, rocketDirX = 1, rocketDirY = -1;
+        let angle = 0;
+
+        function animate() {
+            angle += 0.5;
+
+            // ЧЁРНАЯ ДЫРА
+            bhX += bhDirX * 0.4;
+            bhY += bhDirY * 0.3;
+            if (bhX > 85 || bhX < 5) bhDirX *= -1;
+            if (bhY > 85 || bhY < 5) bhDirY *= -1;
+            blackHole.style.left = bhX + '%';
+            blackHole.style.top = bhY + '%';
+            blackHole.style.transform = `scale(${1 + Math.sin(angle * 0.02) * 0.1})`;
+
+            disk.style.transform = `translate(-50%, -50%) rotateX(60deg) rotate(${angle * 2}deg)`;
+            innerDisk.style.transform = `translate(-50%, -50%) rotateX(70deg) rotate(${-angle * 1.5}deg)`;
+
+            // ЗЕМЛЯ
+            earthX += earthDirX * 0.3;
+            earthY += earthDirY * 0.25;
+            if (earthX > 90 || earthX < 5) earthDirX *= -1;
+            if (earthY > 85 || earthY < 5) earthDirY *= -1;
+            earth.style.left = earthX + '%';
+            earth.style.top = earthY + '%';
+            earth.style.transform = `rotate(${angle * 0.3}deg)`;
+
+            // РАКЕТА
+            rocketX += rocketDirX * 0.5;
+            rocketY += rocketDirY * 0.4;
+            if (rocketX > 90 || rocketX < 3) rocketDirX *= -1;
+            if (rocketY > 85 || rocketY < 3) rocketDirY *= -1;
+            rocket.style.left = rocketX + '%';
+            rocket.style.top = rocketY + '%';
+            let rot = Math.atan2(rocketDirY, rocketDirX) * (180 / Math.PI);
+            rocket.style.transform = `rotate(${rot}deg) scale(${1 + Math.sin(angle * 0.03) * 0.05})`;
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
 
 </body>
-  </html>к
+</html>
