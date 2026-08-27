@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fzzrix VPN</title>
+    <title>Fzzrix VPN • Космос</title>
     <style>
-        /* ===== ГЛОБАЛЬНО ===== */
+        /* ===== ГЛОБАЛЬНЫЙ СБРОС ===== */
         * {
             margin: 0;
             padding: 0;
@@ -13,117 +13,196 @@
         }
 
         body {
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             min-height: 100vh;
-            background: #0b0b0f;
+            background: #07070d;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 16px;
-            overflow: hidden;
+            padding: 20px;
             position: relative;
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background-image: radial-gradient(#ffffff08 1px, transparent 1px);
-            background-size: 24px 24px;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        /* ===== РАКЕТА ===== */
-        .rocket-wrap {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 0;
             overflow: hidden;
         }
 
-        .rocket {
+        /* ===== SPLASH SCREEN ===== */
+        .splash {
+            position: fixed;
+            inset: 0;
+            z-index: 999;
+            background: #07070d;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .splash.hidden {
+            opacity: 0;
+            transform: scale(1.05);
+            pointer-events: none;
+        }
+
+        .splash .logo-big {
+            font-size: 64px;
+            font-weight: 700;
+            color: white;
+            animation: splashPulse 1.2s ease-in-out infinite;
+        }
+
+        .splash .logo-big span {
+            color: #ff3b3b;
+        }
+
+        .splash .loader {
+            margin-top: 20px;
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255, 255, 255, 0.05);
+            border-top: 3px solid #ff3b3b;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes splashPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.04); opacity: 0.8; }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* ===== ЖИДКОЕ СТЕКЛО ===== */
+        .glass-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+            background: radial-gradient(ellipse at 50% 50%, rgba(255, 50, 50, 0.08), transparent 60%);
+        }
+
+        .glass-bg::before {
+            content: '';
             position: absolute;
-            font-size: 72px;
-            filter: drop-shadow(0 0 40px rgba(255, 60, 60, 0.2));
-            will-change: transform;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, 
+                rgba(255, 50, 50, 0.08), 
+                rgba(255, 100, 50, 0.08), 
+                rgba(255, 200, 50, 0.08), 
+                rgba(255, 50, 50, 0.08),
+                rgba(100, 50, 255, 0.08),
+                rgba(255, 50, 50, 0.08)
+            );
+            animation: liquidGlass 10s linear infinite;
+            filter: blur(80px);
         }
 
-        .rocket-fire {
+        .glass-bg::after {
+            content: '';
             position: absolute;
-            bottom: -24px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 36px;
-            animation: firePulse 0.12s infinite alternate ease-in-out;
+            top: -30%;
+            left: -30%;
+            width: 160%;
+            height: 160%;
+            background: radial-gradient(ellipse at 30% 40%, rgba(255, 100, 50, 0.04), transparent 50%),
+                         radial-gradient(ellipse at 70% 60%, rgba(50, 100, 255, 0.04), transparent 50%);
+            animation: pulseGlass 6s ease-in-out infinite;
+            filter: blur(60px);
         }
 
-        @keyframes firePulse {
-            0% {
-                transform: translateX(-50%) scale(0.6) rotate(2deg);
-                opacity: 0.5;
-            }
-            100% {
-                transform: translateX(-50%) scale(1.2) rotate(-2deg);
-                opacity: 1;
-            }
+        @keyframes liquidGlass {
+            0% { transform: rotate(0deg) scale(1.3); }
+            100% { transform: rotate(360deg) scale(1.3); }
         }
 
-        /* ===== КАРТОЧКА ===== */
-        .glass {
-            max-width: 420px;
+        @keyframes pulseGlass {
+            0% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); }
+            100% { opacity: 0.5; transform: scale(1); }
+        }
+
+        /* ===== ЗВЁЗДЫ ===== */
+        .stars {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle var(--duration) ease-in-out infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.15; transform: scale(0.7); }
+            100% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* ===== МЕТЕОРЫ ===== */
+        .meteor {
+            position: fixed;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            z-index: 0;
+            pointer-events: none;
+            box-shadow: 0 0 8px 3px rgba(255, 200, 150, 0.25);
+            animation: meteorShoot linear infinite;
+        }
+
+        .meteor::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 60px;
+            height: 1px;
+            background: linear-gradient(to left, rgba(255,255,255,0), rgba(255,255,255,0.3));
+            right: 2px;
+        }
+
+        @keyframes meteorShoot {
+            0% { transform: translate(0, 0) rotate(-35deg); opacity: 0; }
+            5% { opacity: 1; }
+            20% { opacity: 1; }
+            25% { opacity: 0; transform: translate(-300px, 200px) rotate(-35deg); }
+            100% { opacity: 0; }
+        }
+
+        /* ===== КАРТА ===== */
+        .cosmic-card {
+            max-width: 400px;
             width: 100%;
-            max-height: 94vh;
+            max-height: 90vh;
             overflow-y: auto;
-            padding: 32px 26px;
-            background: rgba(20, 20, 30, 0.45);
-            backdrop-filter: blur(24px) saturate(1.4);
-            -webkit-backdrop-filter: blur(24px) saturate(1.4);
-            border-radius: 48px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+            padding: 28px 22px;
+            background: rgba(10, 10, 20, 0.5);
+            backdrop-filter: blur(18px) saturate(1.5);
+            -webkit-backdrop-filter: blur(18px) saturate(1.5);
+            border-radius: 36px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.03);
             position: relative;
             z-index: 2;
-            transition: all 0.25s;
+            scroll-behavior: smooth;
         }
 
-        .glass::-webkit-scrollbar {
-            width: 3px;
+        .cosmic-card::-webkit-scrollbar {
+            width: 2px;
         }
-        .glass::-webkit-scrollbar-thumb {
+        .cosmic-card::-webkit-scrollbar-thumb {
             background: #ff3b3b;
             border-radius: 20px;
-        }
-
-        /* ===== ТЕКСТ ===== */
-        .eyebrow {
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: #ff6b6b;
-            font-weight: 600;
-        }
-
-        .headline {
-            font-size: 30px;
-            font-weight: 700;
-            color: #fff;
-            line-height: 1.2;
-            margin: 6px 0 4px;
-        }
-
-        .headline span {
-            background: linear-gradient(135deg, #ff3b3b, #ff8a5c);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .subhead {
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 15px;
-            margin-bottom: 22px;
-            font-weight: 400;
         }
 
         /* ===== СЧЁТЧИК ===== */
@@ -131,291 +210,662 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            background: rgba(255, 255, 255, 0.04);
-            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 6px 14px;
             border-radius: 60px;
-            margin-bottom: 18px;
-            border: 1px solid rgba(255, 255, 255, 0.04);
             width: fit-content;
-            margin-left: auto;
-            margin-right: auto;
+            margin: 0 auto 16px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
         }
 
         .counter-dot {
-            width: 8px;
-            height: 8px;
+            width: 7px;
+            height: 7px;
             background: #00b86b;
             border-radius: 50%;
-            animation: pulseDot 1.8s infinite;
+            animation: pulseDot 2s ease-in-out infinite;
+            box-shadow: 0 0 12px rgba(0, 184, 107, 0.25);
         }
 
         @keyframes pulseDot {
-            0%,
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
-            50% {
-                opacity: 0.4;
-                transform: scale(0.7);
-            }
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.6); }
         }
 
         .counter-text {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 13px;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 12px;
             font-weight: 400;
         }
 
         .counter-number {
             color: #fff;
             font-weight: 600;
-            font-size: 15px;
+            font-size: 14px;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        /* ===== СТАТУС VPN ===== */
+        .status-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(0, 184, 107, 0.08);
+            padding: 4px 12px;
+            border-radius: 60px;
+            width: fit-content;
+            margin: 0 auto 12px;
+            border: 1px solid rgba(0, 184, 107, 0.08);
+        }
+
+        .status-badge .dot {
+            width: 6px;
+            height: 6px;
+            background: #00b86b;
+            border-radius: 50%;
+            animation: pulseDot 2s ease-in-out infinite;
+        }
+
+        .status-badge .label {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .status-badge .status-text {
+            color: #00b86b;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        /* ===== ЛОГО ===== */
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .logo-icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, #ff3b3b, #ff6b3b);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 8px 24px rgba(255, 59, 59, 0.12);
+            flex-shrink: 0;
+        }
+
+        .logo-text {
+            font-size: 20px;
+            font-weight: 700;
+            color: white;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-text span {
+            color: #ff4a4a;
+        }
+
+        /* ===== ТЕКСТ ===== */
+        .greeting {
+            font-size: 28px;
+            font-weight: 700;
+            color: white;
+            line-height: 1.2;
+            margin-bottom: 4px;
+        }
+
+        .greeting-light {
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 400;
+        }
+
+        .desc {
+            color: rgba(255, 255, 255, 0.35);
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 16px;
         }
 
         /* ===== КНОПКИ ===== */
-        .btn {
+        .btn-primary {
             display: block;
             width: 100%;
-            padding: 15px 20px;
+            padding: 16px;
             border: none;
-            border-radius: 60px;
+            border-radius: 16px;
             font-size: 16px;
             font-weight: 600;
-            color: #fff;
-            background: #ff3b3b;
+            color: white;
+            background: linear-gradient(135deg, #ff3b3b, #d32f2f);
             cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-            margin: 6px 0;
-            box-shadow: 0 8px 24px rgba(255, 59, 59, 0.2);
-            letter-spacing: 0.3px;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            margin: 8px 0;
+            box-shadow: 0 8px 28px rgba(255, 59, 59, 0.12);
             position: relative;
             overflow: hidden;
         }
 
-        .btn:hover {
-            transform: scale(1.02) translateY(-3px);
-            box-shadow: 0 14px 36px rgba(255, 59, 59, 0.35);
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.05), transparent 60%);
+            pointer-events: none;
         }
 
-        .btn:active {
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 36px rgba(255, 59, 59, 0.2);
+        }
+
+        .btn-primary:active {
             transform: scale(0.97);
         }
 
-        .btn-ghost {
+        .btn-secondary {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            font-size: 15px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.02);
+            cursor: pointer;
+            transition: all 0.2s;
+            margin: 6px 0;
+        }
+
+        .btn-secondary:hover {
             background: rgba(255, 255, 255, 0.04);
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: none;
-            color: rgba(255, 255, 255, 0.8);
+            border-color: rgba(255, 255, 255, 0.1);
         }
 
-        .btn-ghost:hover {
-            background: rgba(255, 255, 255, 0.08);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-        }
-
-        .btn-green {
-            background: #00b86b;
-            box-shadow: 0 8px 24px rgba(0, 184, 107, 0.25);
-        }
-        .btn-green:hover {
-            box-shadow: 0 14px 36px rgba(0, 184, 107, 0.35);
-        }
-
-        .btn-gold {
-            background: #d9a024;
-            box-shadow: 0 8px 24px rgba(217, 160, 36, 0.2);
-        }
-        .btn-gold:hover {
-            box-shadow: 0 14px 36px rgba(217, 160, 36, 0.3);
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 1.5px solid rgba(255, 255, 255, 0.12);
-            color: rgba(255, 255, 255, 0.7);
-            box-shadow: none;
-        }
-        .btn-outline:hover {
-            background: rgba(255, 255, 255, 0.04);
-            border-color: rgba(255, 255, 255, 0.2);
-        }
-
-        .btn-copy {
+        .btn-share {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 60px;
+            font-size: 13px;
+            font-weight: 500;
+            color: white;
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.06);
-            color: rgba(255, 255, 255, 0.7);
-            box-shadow: none;
-            font-size: 14px;
-            padding: 10px;
-            margin-top: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            width: 100%;
+            margin-top: 6px;
         }
 
-        .btn-copy:hover {
+        .btn-share:hover {
             background: rgba(255, 255, 255, 0.08);
         }
 
-        .btn-copy.copied {
+        /* ===== ТАРИФЫ ===== */
+        .tier {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 20px;
+            padding: 18px 20px;
+            margin: 10px 0;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            transition: all 0.3s;
+            cursor: default;
+        }
+
+        .tier:hover {
+            border-color: rgba(255, 59, 59, 0.1);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .tier-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+
+        .tier-name {
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .tier-price {
+            font-size: 22px;
+            font-weight: 700;
+            color: #ff5e5e;
+        }
+
+        .tier-desc {
+            color: rgba(255, 255, 255, 0.35);
+            font-size: 13px;
+            margin-bottom: 12px;
+        }
+
+        .tier .btn-primary,
+        .tier .btn-secondary {
+            margin: 0;
+        }
+
+        /* ===== БЕСПЛАТНЫЙ ТАРИФ ===== */
+        .copy-link {
+            display: block;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 14px;
+            border-radius: 14px;
+            word-break: break-all;
+            text-align: center;
+            color: #ff5e5e;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            font-size: 14px;
+            user-select: all;
+            margin: 8px 0;
+        }
+
+        .copy-link:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 59, 59, 0.1);
+            transform: scale(1.01);
+        }
+
+        .copy-link:active {
+            transform: scale(0.98);
+        }
+
+        .copy-link.copied {
             border-color: #00b86b;
             color: #00b86b;
         }
 
-        /* ===== ПЛАНЫ ===== */
-        .plan {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(4px);
-            border-radius: 28px;
-            padding: 18px 20px;
-            margin: 12px 0;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .plan:hover {
-            border-color: rgba(255, 59, 59, 0.2);
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .plan-title {
-            color: #fff;
-            font-size: 19px;
-            font-weight: 600;
-        }
-
-        .plan-price {
-            font-size: 24px;
-            font-weight: 700;
-            color: #ff6b6b;
-            margin: 2px 0;
-        }
-
-        .plan-desc {
-            color: rgba(255, 255, 255, 0.45);
-            font-size: 13px;
-            margin-bottom: 10px;
-        }
-
-        /* ===== ИНСТРУКЦИЯ ===== */
-        .help {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(4px);
-            border-radius: 28px;
-            padding: 18px 20px;
+        /* ===== FAQ ===== */
+        .faq {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 20px;
+            padding: 16px 18px;
             margin-top: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            text-align: left;
-            color: rgba(255, 255, 255, 0.75);
-            font-size: 14px;
-            line-height: 1.7;
+            border: 1px solid rgba(255, 255, 255, 0.03);
         }
 
-        .help h3 {
-            color: #fff;
-            font-size: 17px;
+        .faq-title {
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
             text-align: center;
             margin-bottom: 10px;
         }
 
-        .step {
-            background: rgba(255, 255, 255, 0.04);
-            padding: 8px 14px;
-            border-radius: 16px;
-            margin: 6px 0;
-            border-left: 2px solid #ff3b3b;
+        .faq-item {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            padding: 8px 0;
         }
 
-        .step-done {
-            border-left-color: #00b86b;
+        .faq-item:last-child {
+            border-bottom: none;
         }
 
-        .help a {
-            color: #ff6b6b;
-            text-decoration: none;
+        .faq-question {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 13px;
             font-weight: 500;
-        }
-        .help a:hover {
-            text-decoration: underline;
-        }
-
-        /* ===== QR-КОД И ОПЛАТА ===== */
-        .card-number {
-            background: rgba(255, 255, 255, 0.04);
-            padding: 12px;
-            border-radius: 18px;
-            font-family: 'SF Mono', monospace;
-            font-size: 18px;
-            letter-spacing: 2.5px;
-            border: 1px dashed rgba(255, 59, 59, 0.2);
-            color: #ff6b6b;
-            font-weight: 600;
-            margin: 8px 0;
+            cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 8px;
+            transition: 0.2s;
         }
 
-        .qr-container {
+        .faq-question:hover {
+            color: white;
+        }
+
+        .faq-question .arrow {
+            transition: 0.3s;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        .faq-question.active .arrow {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            color: rgba(255, 255, 255, 0.35);
+            font-size: 13px;
+            line-height: 1.6;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            padding-top: 0;
+        }
+
+        .faq-answer.open {
+            max-height: 200px;
+            padding-top: 6px;
+        }
+
+        /* ===== ИНСТРУКЦИЯ ===== */
+        .guide {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 20px;
+            padding: 18px 20px;
+            margin-top: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .guide-title {
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .guide-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 6px 0;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .guide-step .num {
+            width: 22px;
+            height: 22px;
+            background: rgba(255, 59, 59, 0.08);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 600;
+            color: #ff5e5e;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        .guide-step a {
+            color: #ff5e5e;
+            text-decoration: none;
+        }
+
+        .guide-step a:hover {
+            text-decoration: underline;
+        }
+
+        /* ===== ОПЛАТА ===== */
+        .payment-box {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid rgba(255, 59, 59, 0.06);
+            margin: 10px 0;
+        }
+
+        .payment-box .tier-price {
+            text-align: center;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .card-number-display {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 14px;
+            border-radius: 14px;
+            font-family: 'SF Mono', monospace;
+            font-size: 17px;
+            letter-spacing: 2px;
+            color: #ff5e5e;
+            font-weight: 600;
+            text-align: center;
+            border: 1px dashed rgba(255, 59, 59, 0.08);
+            margin: 10px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .copy-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: none;
+            color: rgba(255, 255, 255, 0.4);
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: white;
+        }
+
+        .copy-btn.copied {
+            color: #00b86b;
+        }
+
+        .warning {
+            background: rgba(255, 59, 59, 0.04);
+            padding: 12px;
+            border-radius: 14px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 13px;
+            border: 1px solid rgba(255, 59, 59, 0.04);
+            margin: 10px 0;
+        }
+
+        .warning strong {
+            color: #ff3b3b;
+        }
+
+        .qr-wrapper {
             display: flex;
             justify-content: center;
             margin: 12px 0;
         }
 
-        .qr-container canvas {
-            background: #fff;
-            padding: 10px;
+        .qr-wrapper canvas {
+            background: white;
+            padding: 8px;
             border-radius: 16px;
-            width: 140px;
-            height: 140px;
+            width: 120px;
+            height: 120px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            animation: qrAppear 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        .notice {
-            background: rgba(255, 59, 59, 0.06);
-            padding: 12px;
-            border-radius: 18px;
-            border: 1px solid rgba(255, 59, 59, 0.08);
-            margin: 10px 0;
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 13px;
+        @keyframes qrAppear {
+            0% { opacity: 0; transform: scale(0.8) rotate(-5deg); }
+            100% { opacity: 1; transform: scale(1) rotate(0deg); }
         }
 
-        .notice strong {
-            color: #ff3b3b;
+        /* ===== НАВИГАЦИЯ ===== */
+        .nav {
+            display: flex;
+            gap: 4px;
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
         }
 
-        .vpn-box {
+        .nav-btn {
+            flex: 1;
+            padding: 8px 0;
+            border: none;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.02);
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 11px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            line-height: 1.3;
+        }
+
+        .nav-btn:hover {
             background: rgba(255, 255, 255, 0.04);
-            padding: 12px;
-            border-radius: 18px;
-            word-break: break-all;
-            margin: 8px 0;
+            color: rgba(255, 255, 255, 0.6);
         }
 
-        .vpn-box a {
-            color: #ff6b6b;
+        .nav-btn.active {
+            background: rgba(255, 59, 59, 0.06);
+            color: #ff5e5e;
+        }
+
+        .nav-btn .icon {
+            display: block;
+            font-size: 16px;
+            margin-bottom: 1px;
+        }
+
+        /* ===== СТРАНИЦЫ ===== */
+        .page {
+            display: block;
+            animation: fadeUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .page.hidden {
+            display: none;
+        }
+
+        @keyframes fadeUp {
+            0% { opacity: 0; transform: translateY(14px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== ПОДДЕРЖКА ===== */
+        .support-box {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 20px;
+            padding: 24px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .support-box .support-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .support-box .support-title {
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .support-box .support-desc {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .support-box .support-contact {
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #ff3b3b, #d32f2f);
+            color: white;
+            font-weight: 600;
             text-decoration: none;
+            font-size: 15px;
+            transition: all 0.2s;
+            box-shadow: 0 8px 28px rgba(255, 59, 59, 0.12);
         }
 
-        /* ===== АНИМАЦИИ ===== */
-        .fade-in {
-            animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        .support-box .support-contact:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 36px rgba(255, 59, 59, 0.2);
         }
 
-        @keyframes fadeIn {
-            0% {
-                opacity: 0;
-                transform: translateY(12px) scale(0.97);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
+        /* ===== ТОСТ-УВЕДОМЛЕНИЕ ===== */
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 12px 24px;
+            border-radius: 60px;
+            color: white;
+            font-size: 14px;
+            font-weight: 500;
+            z-index: 100;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            pointer-events: none;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
         }
 
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .toast .icon {
+            margin-right: 8px;
+        }
+
+        /* ===== КНОПКА "НАВЕРХ" ===== */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255, 59, 59, 0.12);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 50;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .scroll-top:hover {
+            background: rgba(255, 59, 59, 0.2);
+            transform: scale(1.05);
+        }
+
+        /* ===== ВСПОМОГАТЕЛЬНОЕ ===== */
         .hidden {
             display: none !important;
         }
@@ -424,229 +874,415 @@
             margin-top: 12px;
         }
 
+        .text-center {
+            text-align: center;
+        }
+
         /* ===== АДАПТИВ ===== */
         @media (max-width: 480px) {
-            .glass {
-                padding: 24px 18px;
-                border-radius: 32px;
+            .cosmic-card {
+                padding: 22px 16px;
+                border-radius: 28px;
             }
-            .headline {
-                font-size: 26px;
+            .greeting {
+                font-size: 24px;
             }
-            .rocket {
-                font-size: 56px;
+            .logo-text {
+                font-size: 18px;
             }
-            .card-number {
+            .tier-price {
+                font-size: 20px;
+            }
+            .card-number-display {
                 font-size: 15px;
                 letter-spacing: 1.5px;
+                padding: 12px;
             }
-            .qr-container canvas {
-                width: 110px;
-                height: 110px;
+            .qr-wrapper canvas {
+                width: 100px;
+                height: 100px;
+            }
+            .nav-btn {
+                font-size: 10px;
+                padding: 6px 0;
+            }
+            .nav-btn .icon {
+                font-size: 14px;
+            }
+            .scroll-top {
+                bottom: 20px;
+                right: 20px;
+                width: 38px;
+                height: 38px;
+                font-size: 16px;
+            }
+            .toast {
+                font-size: 12px;
+                padding: 10px 18px;
+                bottom: 80px;
+            }
+            .splash .logo-big {
+                font-size: 40px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .cosmic-card {
+                padding: 16px 12px;
+                border-radius: 24px;
+            }
+            .greeting {
+                font-size: 20px;
+            }
+            .btn-primary {
+                padding: 14px;
+                font-size: 14px;
+            }
+            .support-box .support-contact {
+                padding: 10px 20px;
+                font-size: 13px;
+            }
+            .copy-link {
+                font-size: 12px;
+                padding: 12px;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- ===== РАКЕТА ===== -->
-    <div class="rocket-wrap" id="rocketWrap">
-        <div class="rocket" id="rocket">
-            🚀
-            <span class="rocket-fire">🔥</span>
-        </div>
+    <!-- ===== SPLASH SCREEN ===== -->
+    <div class="splash" id="splash">
+        <div class="logo-big">Fzzrix <span>VPN</span></div>
+        <div class="loader"></div>
     </div>
 
+    <!-- ===== ТОСТ ===== -->
+    <div class="toast" id="toast">
+        <span class="icon">✅</span> Скопировано!
+    </div>
+
+    <!-- ===== КНОПКА "НАВЕРХ" ===== -->
+    <button class="scroll-top" id="scrollTop" onclick="scrollToTop()">↑</button>
+
+    <!-- ===== ЖИДКОЕ СТЕКЛО ===== -->
+    <div class="glass-bg"></div>
+
+    <!-- ===== ЗВЁЗДЫ ===== -->
+    <div class="stars" id="stars"></div>
+
+    <!-- ===== МЕТЕОРЫ ===== -->
+    <div class="meteor" style="top: 10%; left: 70%; animation-duration: 6s; animation-delay: 0s;"></div>
+    <div class="meteor" style="top: 20%; left: 40%; animation-duration: 8s; animation-delay: 4s;"></div>
+    <div class="meteor" style="top: 5%; left: 85%; animation-duration: 7s; animation-delay: 9s;"></div>
+
     <!-- ===== ГЛАВНАЯ КАРТА ===== -->
-    <div class="glass" id="app">
+    <div class="cosmic-card" id="app">
 
-        <div class="eyebrow">✦ Fzzrix VPN</div>
-        <div class="headline">
-            Добро пожаловать<br>
-            в <span>безопасный</span> интернет
+        <!-- ЛОГО -->
+        <div class="logo">
+            <div class="logo-icon">✦</div>
+            <div class="logo-text">Fzzrix <span>VPN</span></div>
         </div>
-        <div class="subhead" id="subText">Нажми «Старт», чтобы выбрать тариф</div>
 
-        <!-- СЧЁТЧИК -->
+        <!-- ===== СТАТУС VPN ===== -->
+        <div class="status-badge">
+            <span class="dot"></span>
+            <span class="label">Статус:</span>
+            <span class="status-text">Защищено</span>
+        </div>
+
+        <!-- ===== СЧЁТЧИК ===== -->
         <div class="counter">
             <span class="counter-dot"></span>
-            <span class="counter-text">Сейчас с нами</span>
-            <span class="counter-number" id="userCount">328</span>
-            <span class="counter-text">человек</span>
+            <span class="counter-text">VPN онлайн:</span>
+            <span class="counter-number" id="userCounter">0</span>
         </div>
 
-        <!-- СТАРТ -->
-        <button class="btn" id="startBtn">🚀 Старт</button>
+        <!-- ===== СТРАНИЦА: ГЛАВНАЯ ===== -->
+        <div class="page" id="pageHome">
+            <div class="greeting">
+                Добро пожаловать<br>
+                <span class="greeting-light">в безопасный интернет</span>
+            </div>
+            <div class="desc">Нажми «Магазин», чтобы выбрать тариф</div>
 
-        <!-- ===== ТАРИФЫ ===== -->
-        <div id="plans" class="hidden">
+            <!-- КНОПКА ПОДЕЛИТЬСЯ -->
+            <button class="btn-share" onclick="shareSite()">
+                📤 Поделиться с друзьями
+            </button>
+        </div>
 
-            <div class="plan fade-in">
-                <div class="plan-title">🆓 Бесплатно</div>
-                <div class="plan-price">0 ₽</div>
-                <div class="plan-desc">Базовый доступ</div>
-                <button class="btn btn-green" onclick="showFree()">🔑 Получить</button>
+        <!-- ===== СТРАНИЦА: МАГАЗИН ===== -->
+        <div class="page hidden" id="pageShop">
+            <div class="greeting" style="font-size: 22px; margin-bottom: 12px;">
+                🛒 <span class="greeting-light">Выбери свой тариф</span>
             </div>
 
-            <div class="plan fade-in" style="animation-delay: 0.06s;">
-                <div class="plan-title">💎 Премиум</div>
-                <div class="plan-price">50 ₽</div>
-                <div class="plan-desc">Максимальная скорость</div>
-                <button class="btn" onclick="showPremium(50)">💳 Купить за 50 ₽</button>
-            </div>
-
-            <div class="plan fade-in" style="animation-delay: 0.12s;">
-                <div class="plan-title">💎 Премиум навсегда</div>
-                <div class="plan-price">100 ₽</div>
-                <div class="plan-desc">Доступ даже если VPN закроют</div>
-                <button class="btn btn-gold" onclick="showPremium(100)">💳 Купить за 100 ₽</button>
-            </div>
-
-            <button class="btn btn-ghost fade-in" style="animation-delay: 0.18s;" onclick="toggleHelp()">❓ Как добавить подписку?</button>
-
-            <div id="helpBlock" class="hidden help mt-2 fade-in">
-                <h3>📖 Инструкция</h3>
-                <div class="step"><strong>1.</strong> Скачай <strong>Happ</strong>:<br>
-                    <a href="https://apps.apple.com/us/app/happ-proxy-utility/id6504287215?l=ru" target="_blank">📱 iOS</a> •
-                    <a href="https://play.google.com/store/apps/details?id=com.happproxy" target="_blank">📱 Android</a>
+            <!-- БЕСПЛАТНО -->
+            <div class="tier fade-up">
+                <div class="tier-header">
+                    <span class="tier-name">🆓 Бесплатно</span>
+                    <span class="tier-price">0 ₽</span>
                 </div>
-                <div class="step"><strong>2.</strong> Нажми <strong>«➕ Добавить подписку»</strong></div>
-                <div class="step"><strong>3.</strong> Выбери <strong>«Вставить из буфера»</strong> или <strong>«Ручной ввод»</strong></div>
-                <div class="step"><strong>4.</strong> Вставь ссылку → <strong>«Добавить»</strong></div>
-                <div class="step"><strong>5.</strong> Выбери сервер → <strong>«Подключиться»</strong></div>
-                <div class="step step-done"><strong>✅ Готово!</strong> Ты защищён</div>
-                <button class="btn btn-outline" onclick="toggleHelp()" style="margin-top: 8px;">🔙 Скрыть</button>
+                <div class="tier-desc">Базовый доступ</div>
+                <div class="copy-link" id="freeLink" onclick="copyFreeLink()">
+                    📋 https://tri.su/nbAGa
+                </div>
+                <button class="btn-secondary" onclick="copyFreeLink()" style="margin-top: 0;">📋 Скопировать ссылку</button>
             </div>
 
-            <div class="help fade-in" style="animation-delay: 0.24s;">
-                <h3>📥 Как подключиться</h3>
-                <ol style="padding-left: 20px;">
-                    <li>Скачай <strong>Happ</strong> (<a href="https://apps.apple.com/us/app/happ-proxy-utility/id6504287215?l=ru" target="_blank">iOS</a> / <a href="https://play.google.com/store/apps/details?id=com.happproxy" target="_blank">Android</a>)</li>
-                    <li>Оплати тариф</li>
-                    <li>Добавь ссылку в приложение</li>
-                </ol>
+            <!-- ПРЕМИУМ 50 ₽ -->
+            <div class="tier fade-up" style="animation-delay: 0.06s;">
+                <div class="tier-header">
+                    <span class="tier-name">💎 Премиум</span>
+                    <span class="tier-price">50 ₽</span>
+                </div>
+                <div class="tier-desc">Максимальная скорость</div>
+                <button class="btn-primary" onclick="showPremium(50)">Купить за 50 ₽</button>
             </div>
+
+            <!-- ПРЕМИУМ НАВСЕГДА 100 ₽ -->
+            <div class="tier fade-up" style="animation-delay: 0.12s;">
+                <div class="tier-header">
+                    <span class="tier-name">💎 Премиум навсегда</span>
+                    <span class="tier-price" style="color: #d9a024;">100 ₽</span>
+                </div>
+                <div class="tier-desc">Доступ даже если VPN закроют</div>
+                <button class="btn-primary" style="background: linear-gradient(135deg, #d9a024, #b8860b); box-shadow: 0 8px 28px rgba(217, 160, 36, 0.12);" onclick="showPremium(100)">Купить за 100 ₽</button>
+            </div>
+
+            <!-- КНОПКА ПОДЕЛИТЬСЯ -->
+            <button class="btn-share" onclick="shareSite()" style="margin-top: 12px;">
+                📤 Поделиться с друзьями
+            </button>
+        </div>
+
+        <!-- ===== СТРАНИЦА: ИНСТРУКЦИЯ ===== -->
+        <div class="page hidden" id="pageHelp">
+            <div class="greeting" style="font-size: 22px; margin-bottom: 12px;">
+                📖 <span class="greeting-light">Инструкция</span>
+            </div>
+
+            <div class="guide" style="margin-top: 0;">
+                <div class="guide-title">Как подключить VPN</div>
+                <div class="guide-step">
+                    <span class="num">1</span>
+                    <span>Скачай <strong style="color:white;">Happ</strong>: <a href="https://apps.apple.com/us/app/happ-proxy-utility/id6504287215?l=ru" target="_blank">iOS</a> / <a href="https://play.google.com/store/apps/details?id=com.happproxy" target="_blank">Android</a></span>
+                </div>
+                <div class="guide-step">
+                    <span class="num">2</span>
+                    <span>Нажми <strong style="color:white;">«➕ Добавить подписку»</strong></span>
+                </div>
+                <div class="guide-step">
+                    <span class="num">3</span>
+                    <span>Вставь ссылку → <strong style="color:white;">«Добавить»</strong></span>
+                </div>
+                <div class="guide-step">
+                    <span class="num">4</span>
+                    <span>Выбери сервер → <strong style="color:white;">«Подключиться»</strong></span>
+                </div>
+                <div class="guide-step" style="color: #00b86b;">
+                    <span class="num" style="background: rgba(0,184,107,0.08); color: #00b86b;">✓</span>
+                    <span>Готово! Ты защищён 🎉</span>
+                </div>
+            </div>
+
+            <div class="guide" style="margin-top: 10px;">
+                <div class="guide-title">🚀 Быстрый старт</div>
+                <div class="guide-step">
+                    <span class="num">1</span>
+                    <span>Выбери тариф в <strong style="color:white;">«Магазин»</strong></span>
+                </div>
+                <div class="guide-step">
+                    <span class="num">2</span>
+                    <span>Оплати</span>
+                </div>
+                <div class="guide-step">
+                    <span class="num">3</span>
+                    <span>Добавь ссылку в Happ</span>
+                </div>
+            </div>
+
+            <!-- КНОПКА ПОДЕЛИТЬСЯ -->
+            <button class="btn-share" onclick="shareSite()" style="margin-top: 12px;">
+                📤 Поделиться с друзьями
+            </button>
+        </div>
+
+        <!-- ===== СТРАНИЦА: ПОДДЕРЖКА ===== -->
+        <div class="page hidden" id="pageSupport">
+            <div class="greeting" style="font-size: 22px; margin-bottom: 12px;">
+                🆘 <span class="greeting-light">Поддержка VPN</span>
+            </div>
+
+            <div class="support-box">
+                <span class="support-icon">🛡️</span>
+                <div class="support-title">Нужна помощь?</div>
+                <div class="support-desc">
+                    Если у вас не работают сервера<br>
+                    либо не получается добавить подписку —<br>
+                    пишите нам в поддержку!
+                </div>
+                <a href="https://t.me/Fzzrix_VPN_Support" target="_blank" class="support-contact">
+                    📩 Написать в поддержку
+                </a>
+            </div>
+
+            <!-- ===== FAQ ===== -->
+            <div class="faq">
+                <div class="faq-title">❓ Часто задаваемые вопросы</div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        Как добавить подписку в Happ?
+                        <span class="arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Открой приложение Happ, нажми «➕ Добавить подписку», вставь ссылку и нажми «Добавить».
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        Почему не работает VPN?
+                        <span class="arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Проверь интернет-соединение, попробуй переключить сервер или переустановить подписку.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        Как продлить подписку?
+                        <span class="arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Напиши @Fzzrix для продления. Оплата производится через МТС Банк на ту же карту.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        Что делать, если не приходит ссылка?
+                        <span class="arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Проверь папку «Спам» в Telegram или напиши в поддержку @Fzzrix_VPN_Support.
+                    </div>
+                </div>
+            </div>
+
+            <!-- КНОПКА ПОДЕЛИТЬСЯ -->
+            <button class="btn-share" onclick="shareSite()" style="margin-top: 12px;">
+                📤 Поделиться с друзьями
+            </button>
         </div>
 
         <!-- ===== ОПЛАТА ===== -->
         <div id="payment" class="hidden">
-            <div class="plan fade-in" style="border-color: rgba(255, 59, 59, 0.2);">
-                <div class="plan-title" id="payTitle">💎 Премиум</div>
-                <div class="plan-price" id="payPrice">50 ₽</div>
+            <div class="payment-box fade-up">
+                <span class="tier-price" id="payPrice" style="display: block; text-align: center;">50 ₽</span>
+                <div style="text-align: center; color: white; font-weight: 600; font-size: 18px; margin-bottom: 4px;" id="payTitle">💎 Премиум</div>
 
-                <div class="card-number">
+                <div class="card-number-display">
                     <span>💳 2203 8302 4035 5850</span>
-                    <button class="btn btn-copy" id="copyBtn" onclick="copyCard()">📋 Копировать</button>
+                    <button class="copy-btn" id="copyBtn" onclick="copyCard()">📋 Копировать</button>
                 </div>
 
-                <!-- ===== QR-КОД ===== -->
-                <div class="qr-container" id="qrContainer"></div>
+                <div style="text-align: center; color: rgba(255,255,255,0.2); font-size: 12px; margin-bottom: 6px;">МТС Банк</div>
 
-                <div style="color: rgba(255,255,255,0.4); font-size: 13px; margin: 4px 0 12px;">МТС Банк</div>
+                <div class="qr-wrapper" id="qrContainer"></div>
 
-                <div class="notice">
-                    ⚠️ <strong>ОБЯЗАТЕЛЬНО!</strong><br>
-                    После оплаты напишите <strong>@Fzzrix</strong><br>
-                    <span style="font-size: 12px; opacity: 0.6;">ИНАЧЕ ПРЕМИУМ НЕ БУДЕТ ВЫДАН!</span>
+                <div class="warning">
+                    ⚠️ <strong>ОБЯЗАТЕЛЬНО!</strong> После оплаты напишите <strong>@Fzzrix</strong>
                 </div>
-                <button class="btn btn-outline" onclick="goBack()">← Назад</button>
+
+                <button class="btn-secondary" onclick="closePayment()">← Назад</button>
             </div>
         </div>
 
-        <!-- ===== БЕСПЛАТНО ===== -->
-        <div id="free" class="hidden">
-            <div class="plan fade-in" style="border-color: rgba(0, 184, 107, 0.2);">
-                <div class="plan-title">🆓 Бесплатно</div>
-                <div class="plan-price">0 ₽</div>
-                <div class="vpn-box">
-                    <a href="https://tri.su/nbAGa" target="_blank">https://tri.su/nbAGa</a>
-                </div>
-                <a href="https://tri.su/nbAGa" class="btn btn-green">🚀 Открыть</a>
-                <button class="btn btn-outline" onclick="goBack()">← Назад</button>
-            </div>
+        <!-- ===== НАВИГАЦИЯ ===== -->
+        <div class="nav">
+            <button class="nav-btn active" id="navHome" onclick="switchPage('home')">
+                <span class="icon">🏠</span> Главная
+            </button>
+            <button class="nav-btn" id="navShop" onclick="switchPage('shop')">
+                <span class="icon">🛒</span> Магазин
+            </button>
+            <button class="nav-btn" id="navHelp" onclick="switchPage('help')">
+                <span class="icon">📖</span> Инструкция
+            </button>
+            <button class="nav-btn" id="navSupport" onclick="switchPage('support')">
+                <span class="icon">🆘</span> Поддержка
+            </button>
         </div>
 
     </div>
 
     <script>
         // =============================================
-        // 120 FPS РАКЕТА
+        // SPLASH SCREEN
         // =============================================
 
-        const rocket = document.getElementById('rocket');
-        let x = 30,
-            y = 30;
-        let dx = 1.2,
-            dy = -1.0;
-        let angle = 0;
-
-        function animateRocket() {
-            const w = window.innerWidth - 120;
-            const h = window.innerHeight - 120;
-
-            x += dx;
-            y += dy;
-
-            if (x > w || x < 10) dx *= -1;
-            if (y > h || y < 10) dy *= -1;
-
-            angle += 0.3;
-            const rot = Math.atan2(dy, dx) * (180 / Math.PI);
-
-            rocket.style.transform =
-                `translate(${x}px, ${y}px) rotate(${rot}deg) scale(${1 + Math.sin(angle * 0.03) * 0.04})`;
-
-            requestAnimationFrame(animateRocket);
-        }
-
-        animateRocket();
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('splash').classList.add('hidden');
+            }, 1200);
+        });
 
         // =============================================
-        // QR-КОД (ГЕНЕРАЦИЯ)
+        // ЗВЁЗДЫ
         // =============================================
 
-        function generateQR(text, containerId) {
-            const container = document.getElementById(containerId);
-            container.innerHTML = '';
-
-            // Используем qrcode.js через CDN
-            const script = document.createElement('script');
-            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';
-            script.onload = function() {
-                new QRCode(container, {
-                    text: text,
-                    width: 140,
-                    height: 140,
-                    colorDark: '#000000',
-                    colorLight: '#ffffff',
-                    correctLevel: QRCode.CorrectLevel.H
-                });
-            };
-            document.head.appendChild(script);
-        }
-
-        // Генерируем QR-код для номера карты
-        // (заменяем пробелы на ничего, чтобы QR был компактнее)
-        const cardNumber = '2203830240355850';
-        // Ждём загрузки страницы и генерируем QR
-        setTimeout(() => {
-            generateQR(cardNumber, 'qrContainer');
-        }, 500);
+        (function createStars() {
+            const container = document.getElementById('stars');
+            for (let i = 0; i < 120; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                const size = Math.random() * 2 + 1;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+                star.style.animationDelay = (Math.random() * 5) + 's';
+                container.appendChild(star);
+            }
+        })();
 
         // =============================================
-        // СЧЁТЧИК
+        // СЧЁТЧИК (с анимацией)
         // =============================================
 
-        let count = 328;
-        const counterEl = document.getElementById('userCount');
+        let userCount = 127;
+        const counterEl = document.getElementById('userCounter');
 
         function updateCounter() {
-            const delta = Math.floor(Math.random() * 3) + 1;
-            count += delta;
-            counterEl.textContent = count;
+            const delta = Math.floor(Math.random() * 2) + 1;
+            userCount += delta;
+            counterEl.textContent = userCount;
         }
 
-        setInterval(updateCounter, 8000);
+        setInterval(updateCounter, 6000);
+        setTimeout(() => { counterEl.textContent = userCount; }, 100);
+
+        // =============================================
+        // ТОСТ
+        // =============================================
+
+        let toastTimeout;
+
+        function showToast(text) {
+            const toast = document.getElementById('toast');
+            toast.innerHTML = `<span class="icon">✅</span> ${text}`;
+            toast.classList.add('show');
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2000);
+        }
 
         // =============================================
         // ЗВУК
@@ -659,30 +1295,106 @@
                 const gain = ctx.createGain();
                 osc.connect(gain);
                 gain.connect(ctx.destination);
-                osc.frequency.value = 800;
+                osc.frequency.value = 600;
                 osc.type = 'sine';
-                gain.gain.setValueAtTime(0.08, ctx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
+                gain.gain.setValueAtTime(0.05, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.1);
                 osc.start(ctx.currentTime);
-                osc.stop(ctx.currentTime + 0.08);
+                osc.stop(ctx.currentTime + 0.1);
+
+                const osc2 = ctx.createOscillator();
+                const gain2 = ctx.createGain();
+                osc2.connect(gain2);
+                gain2.connect(ctx.destination);
+                osc2.frequency.value = 900;
+                osc2.type = 'sine';
+                gain2.gain.setValueAtTime(0.025, ctx.currentTime);
+                gain2.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
+                osc2.start(ctx.currentTime + 0.02);
+                osc2.stop(ctx.currentTime + 0.1);
             } catch (e) { /* тихо */ }
         }
 
         // =============================================
-        // КОПИРОВАНИЕ
+        // QR-КОД (анимированный)
+        // =============================================
+
+        function generateQR(text, containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            container.innerHTML = '';
+
+            const script = document.createElement('script');
+            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';
+            script.onload = function() {
+                new QRCode(container, {
+                    text: text,
+                    width: 120,
+                    height: 120,
+                    colorDark: '#000000',
+                    colorLight: '#ffffff',
+                    correctLevel: QRCode.CorrectLevel.H
+                });
+                // Анимация уже через CSS
+            };
+            document.head.appendChild(script);
+        }
+
+        const cardNumber = '2203830240355850';
+        setTimeout(() => generateQR(cardNumber, 'qrContainer'), 400);
+
+        // =============================================
+        // КОПИРОВАНИЕ БЕСПЛАТНОЙ ССЫЛКИ (с тостом)
+        // =============================================
+
+        function copyFreeLink() {
+            const link = 'https://tri.su/nbAGa';
+            playClick();
+
+            navigator.clipboard.writeText(link).then(() => {
+                const el = document.getElementById('freeLink');
+                el.textContent = '✅ Ссылка скопирована!';
+                el.classList.add('copied');
+                showToast('Ссылка скопирована!');
+                setTimeout(() => {
+                    el.textContent = '📋 https://tri.su/nbAGa';
+                    el.classList.remove('copied');
+                }, 2000);
+            }).catch(() => {
+                const input = document.createElement('input');
+                input.value = link;
+                document.body.appendChild(input);
+                input.select();
+                document.execCommand('copy');
+                input.remove();
+                const el = document.getElementById('freeLink');
+                el.textContent = '✅ Ссылка скопирована!';
+                el.classList.add('copied');
+                showToast('Ссылка скопирована!');
+                setTimeout(() => {
+                    el.textContent = '📋 https://tri.su/nbAGa';
+                    el.classList.remove('copied');
+                }, 2000);
+            });
+        }
+
+        // =============================================
+        // КОПИРОВАНИЕ КАРТЫ (с тостом)
         // =============================================
 
         function copyCard() {
             const card = '2203830240355850';
+            playClick();
+
             navigator.clipboard.writeText(card).then(() => {
                 const btn = document.getElementById('copyBtn');
-                btn.textContent = '✅ Скопировано!';
+                btn.textContent = '✅ Готово!';
                 btn.classList.add('copied');
-                playClick();
+                showToast('Номер карты скопирован!');
                 setTimeout(() => {
                     btn.textContent = '📋 Копировать';
                     btn.classList.remove('copied');
-                }, 2500);
+                }, 2000);
             }).catch(() => {
                 const input = document.createElement('input');
                 input.value = card;
@@ -691,76 +1403,152 @@
                 document.execCommand('copy');
                 input.remove();
                 const btn = document.getElementById('copyBtn');
-                btn.textContent = '✅ Скопировано!';
+                btn.textContent = '✅ Готово!';
                 btn.classList.add('copied');
+                showToast('Номер карты скопирован!');
                 setTimeout(() => {
                     btn.textContent = '📋 Копировать';
                     btn.classList.remove('copied');
-                }, 2500);
+                }, 2000);
             });
         }
 
         // =============================================
-        // ЛОГИКА
+        // ПОДЕЛИТЬСЯ
         // =============================================
 
-        const startBtn = document.getElementById('startBtn');
-        const sub = document.getElementById('subText');
-        const plans = document.getElementById('plans');
-        const payment = document.getElementById('payment');
-        const freeBlock = document.getElementById('free');
-        const helpBlock = document.getElementById('helpBlock');
-
-        function startSite() {
+        function shareSite() {
             playClick();
-            startBtn.classList.add('hidden');
-            sub.textContent = 'Выбери свой тариф:';
-            plans.classList.remove('hidden');
-            document.querySelectorAll('#plans .fade-in').forEach((el, i) => {
-                el.style.animationDelay = (i * 0.06) + 's';
-            });
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Fzzrix VPN',
+                    text: 'Безопасный VPN с бесплатным тарифом! 🚀',
+                    url: window.location.href
+                }).catch(() => {});
+            } else {
+                const url = window.location.href;
+                const text = 'Безопасный VPN с бесплатным тарифом! 🚀\n' + url;
+                const encoded = encodeURIComponent(text);
+                const tgLink = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encoded}`;
+                window.open(tgLink, '_blank');
+            }
         }
+
+        // =============================================
+        // FAQ
+        // =============================================
+
+        function toggleFaq(el) {
+            const answer = el.nextElementSibling;
+            const isOpen = answer.classList.contains('open');
+
+            // Закрываем все
+            document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('open'));
+            document.querySelectorAll('.faq-question').forEach(q => q.classList.remove('active'));
+
+            if (!isOpen) {
+                answer.classList.add('open');
+                el.classList.add('active');
+            }
+        }
+
+        // =============================================
+        // НАВИГАЦИЯ
+        // =============================================
+
+        const pages = {
+            home: document.getElementById('pageHome'),
+            shop: document.getElementById('pageShop'),
+            help: document.getElementById('pageHelp'),
+            support: document.getElementById('pageSupport'),
+        };
+
+        const navBtns = {
+            home: document.getElementById('navHome'),
+            shop: document.getElementById('navShop'),
+            help: document.getElementById('navHelp'),
+            support: document.getElementById('navSupport'),
+        };
+
+        function switchPage(page) {
+            playClick();
+
+            Object.values(pages).forEach(p => p.classList.add('hidden'));
+            pages[page].classList.remove('hidden');
+
+            Object.keys(navBtns).forEach(key => {
+                navBtns[key].classList.remove('active');
+            });
+            navBtns[page].classList.add('active');
+
+            document.getElementById('payment').classList.add('hidden');
+
+            // Прокрутка наверх при смене страницы
+            document.querySelector('.cosmic-card').scrollTop = 0;
+        }
+
+        // =============================================
+        // ОПЛАТА
+        // =============================================
 
         function showPremium(price) {
             playClick();
             document.getElementById('payTitle').textContent = price === 50 ? '💎 Премиум' : '💎 Премиум навсегда';
             document.getElementById('payPrice').textContent = price + ' ₽';
-            plans.classList.add('hidden');
-            payment.classList.remove('hidden');
-            freeBlock.classList.add('hidden');
-            helpBlock.classList.add('hidden');
-
-            // Перегенерируем QR при открытии
+            document.getElementById('payment').classList.remove('hidden');
+            setTimeout(() => generateQR(cardNumber, 'qrContainer'), 100);
+            // Прокручиваем к оплате
             setTimeout(() => {
-                generateQR(cardNumber, 'qrContainer');
-            }, 100);
+                document.querySelector('.cosmic-card').scrollTo({
+                    top: document.querySelector('.cosmic-card').scrollHeight,
+                    behavior: 'smooth'
+                });
+            }, 200);
         }
 
-        function showFree() {
+        function closePayment() {
             playClick();
-            plans.classList.add('hidden');
-            freeBlock.classList.remove('hidden');
-            payment.classList.add('hidden');
-            helpBlock.classList.add('hidden');
+            document.getElementById('payment').classList.add('hidden');
         }
 
-        function goBack() {
-            playClick();
-            plans.classList.remove('hidden');
-            payment.classList.add('hidden');
-            freeBlock.classList.add('hidden');
-            helpBlock.classList.add('hidden');
+        // =============================================
+        // КНОПКА "НАВЕРХ"
+        // =============================================
+
+        function scrollToTop() {
+            document.querySelector('.cosmic-card').scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         }
 
-        function toggleHelp() {
-            playClick();
-            helpBlock.classList.toggle('hidden');
-        }
+        // Показываем/скрываем кнопку "Наверх"
+        const scrollCard = document.querySelector('.cosmic-card');
+        const scrollBtn = document.getElementById('scrollTop');
 
-        startBtn.addEventListener('click', startSite);
+        scrollCard.addEventListener('scroll', function() {
+            if (this.scrollTop > 200) {
+                scrollBtn.classList.add('visible');
+            } else {
+                scrollBtn.classList.remove('visible');
+            }
+        });
 
-        document.querySelectorAll('.btn:not(#startBtn)').forEach(btn => {
-            btn.addEventListener('click', playClick);
+        // =============================================
+        // ЗВУК НА ВСЕ КНОПКИ
+        // =============================================
+
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.btn-primary') ||
+                e.target.closest('.btn-secondary') ||
+                e.target.closest('.nav-btn') ||
+                e.target.closest('.copy-btn') ||
+                e.target.closest('.copy-link') ||
+                e.target.closest('.btn-share') ||
+                e.target.closest('.faq-question') ||
+                e.target.closest('.scroll-top')) {
+                // Звук уже играется в функциях, но если вдруг нет — добавим
+            }
         });
     </script>
 
