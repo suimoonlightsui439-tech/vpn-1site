@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fzzrix VPN • Космос</title>
+    <title>МОЛНИЯ VPN</title>
     <style>
-        /* ===== ГЛОБАЛЬНЫЙ СБРОС ===== */
+        /* ===== ГЛОБАЛЬНО ===== */
         * {
             margin: 0;
             padding: 0;
@@ -13,65 +13,15 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
             min-height: 100vh;
-            background: #07070d;
+            background: #0a0a0a;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
-            position: relative;
+            padding: 16px;
             overflow: hidden;
-        }
-
-        /* ===== SPLASH SCREEN ===== */
-        .splash {
-            position: fixed;
-            inset: 0;
-            z-index: 999;
-            background: #07070d;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-
-        .splash.hidden {
-            opacity: 0;
-            transform: scale(1.05);
-            pointer-events: none;
-        }
-
-        .splash .logo-big {
-            font-size: 64px;
-            font-weight: 700;
-            color: white;
-            animation: splashPulse 1.2s ease-in-out infinite;
-        }
-
-        .splash .logo-big span {
-            color: #ff3b3b;
-        }
-
-        .splash .loader {
-            margin-top: 20px;
-            width: 40px;
-            height: 40px;
-            border: 3px solid rgba(255, 255, 255, 0.05);
-            border-top: 3px solid #ff3b3b;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-
-        @keyframes splashPulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.04); opacity: 0.8; }
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            position: relative;
         }
 
         /* ===== ЖИДКОЕ СТЕКЛО ===== */
@@ -81,7 +31,6 @@
             z-index: 0;
             pointer-events: none;
             overflow: hidden;
-            background: radial-gradient(ellipse at 50% 50%, rgba(255, 50, 50, 0.08), transparent 60%);
         }
 
         .glass-bg::before {
@@ -92,15 +41,14 @@
             width: 200%;
             height: 200%;
             background: conic-gradient(from 0deg, 
-                rgba(255, 50, 50, 0.08), 
-                rgba(255, 100, 50, 0.08), 
-                rgba(255, 200, 50, 0.08), 
-                rgba(255, 50, 50, 0.08),
-                rgba(100, 50, 255, 0.08),
-                rgba(255, 50, 50, 0.08)
+                rgba(255, 0, 0, 0.05), 
+                rgba(200, 0, 0, 0.05), 
+                rgba(255, 0, 0, 0.05), 
+                rgba(100, 0, 0, 0.05),
+                rgba(255, 0, 0, 0.05)
             );
-            animation: liquidGlass 10s linear infinite;
-            filter: blur(80px);
+            animation: liquidGlass 12s linear infinite;
+            filter: blur(60px);
         }
 
         .glass-bg::after {
@@ -110,8 +58,8 @@
             left: -30%;
             width: 160%;
             height: 160%;
-            background: radial-gradient(ellipse at 30% 40%, rgba(255, 100, 50, 0.04), transparent 50%),
-                         radial-gradient(ellipse at 70% 60%, rgba(50, 100, 255, 0.04), transparent 50%);
+            background: radial-gradient(ellipse at 30% 40%, rgba(255, 0, 0, 0.04), transparent 50%),
+                         radial-gradient(ellipse at 70% 60%, rgba(200, 0, 0, 0.04), transparent 50%);
             animation: pulseGlass 6s ease-in-out infinite;
             filter: blur(60px);
         }
@@ -127,82 +75,89 @@
             100% { opacity: 0.5; transform: scale(1); }
         }
 
-        /* ===== ЗВЁЗДЫ ===== */
-        .stars {
+        /* ===== РАКЕТА ===== */
+        .rocket-wrap {
             position: fixed;
             inset: 0;
-            z-index: 0;
             pointer-events: none;
-        }
-
-        .star {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            animation: twinkle var(--duration) ease-in-out infinite alternate;
-        }
-
-        @keyframes twinkle {
-            0% { opacity: 0.15; transform: scale(0.7); }
-            100% { opacity: 1; transform: scale(1.2); }
-        }
-
-        /* ===== МЕТЕОРЫ ===== */
-        .meteor {
-            position: fixed;
-            width: 2px;
-            height: 2px;
-            background: white;
-            border-radius: 50%;
             z-index: 0;
-            pointer-events: none;
-            box-shadow: 0 0 8px 3px rgba(255, 200, 150, 0.25);
-            animation: meteorShoot linear infinite;
+            overflow: hidden;
         }
 
-        .meteor::after {
-            content: '';
+        .rocket {
             position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 60px;
-            height: 1px;
-            background: linear-gradient(to left, rgba(255,255,255,0), rgba(255,255,255,0.3));
-            right: 2px;
+            font-size: 72px;
+            filter: drop-shadow(0 0 40px rgba(255, 0, 0, 0.2));
+            will-change: transform;
         }
 
-        @keyframes meteorShoot {
-            0% { transform: translate(0, 0) rotate(-35deg); opacity: 0; }
-            5% { opacity: 1; }
-            20% { opacity: 1; }
-            25% { opacity: 0; transform: translate(-300px, 200px) rotate(-35deg); }
-            100% { opacity: 0; }
+        .rocket-fire {
+            position: absolute;
+            bottom: -24px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 36px;
+            animation: firePulse 0.12s infinite alternate ease-in-out;
         }
 
-        /* ===== КАРТА ===== */
-        .cosmic-card {
-            max-width: 400px;
+        @keyframes firePulse {
+            0% { transform: translateX(-50%) scale(0.6) rotate(2deg); opacity: 0.5; }
+            100% { transform: translateX(-50%) scale(1.2) rotate(-2deg); opacity: 1; }
+        }
+
+        /* ===== КАРТОЧКА ===== */
+        .glass {
+            max-width: 420px;
             width: 100%;
-            max-height: 90vh;
+            max-height: 94vh;
             overflow-y: auto;
             padding: 28px 22px;
-            background: rgba(10, 10, 20, 0.5);
-            backdrop-filter: blur(18px) saturate(1.5);
-            -webkit-backdrop-filter: blur(18px) saturate(1.5);
-            border-radius: 36px;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+            background: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(24px) saturate(1.4);
+            -webkit-backdrop-filter: blur(24px) saturate(1.4);
+            border-radius: 48px;
+            border: 1px solid rgba(255, 0, 0, 0.08);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 0, 0, 0.03);
             position: relative;
             z-index: 2;
-            scroll-behavior: smooth;
         }
 
-        .cosmic-card::-webkit-scrollbar {
-            width: 2px;
+        .glass::-webkit-scrollbar {
+            width: 3px;
         }
-        .cosmic-card::-webkit-scrollbar-thumb {
-            background: #ff3b3b;
+        .glass::-webkit-scrollbar-thumb {
+            background: #ff0000;
             border-radius: 20px;
+        }
+
+        /* ===== ТЕКСТ ===== */
+        .eyebrow {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #ff3333;
+            font-weight: 600;
+        }
+
+        .headline {
+            font-size: 30px;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.2;
+            margin: 6px 0 4px;
+        }
+
+        .headline span {
+            background: linear-gradient(135deg, #ff0000, #cc0000);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subhead {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 15px;
+            margin-bottom: 20px;
+            font-weight: 400;
         }
 
         /* ===== СЧЁТЧИК ===== */
@@ -210,555 +165,349 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            background: rgba(255, 255, 255, 0.03);
-            padding: 6px 14px;
+            background: rgba(255, 0, 0, 0.04);
+            padding: 8px 16px;
             border-radius: 60px;
+            margin-bottom: 18px;
+            border: 1px solid rgba(255, 0, 0, 0.06);
             width: fit-content;
-            margin: 0 auto 16px;
-            border: 1px solid rgba(255, 255, 255, 0.04);
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .counter-dot {
-            width: 7px;
-            height: 7px;
-            background: #00b86b;
+            width: 8px;
+            height: 8px;
+            background: #ff0000;
             border-radius: 50%;
-            animation: pulseDot 2s ease-in-out infinite;
-            box-shadow: 0 0 12px rgba(0, 184, 107, 0.25);
+            animation: pulseDot 1.8s infinite;
+            box-shadow: 0 0 12px rgba(255, 0, 0, 0.2);
         }
 
         @keyframes pulseDot {
             0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.4; transform: scale(0.6); }
+            50% { opacity: 0.4; transform: scale(0.7); }
         }
 
         .counter-text {
-            color: rgba(255, 255, 255, 0.4);
-            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 13px;
             font-weight: 400;
         }
 
         .counter-number {
             color: #fff;
             font-weight: 600;
-            font-size: 14px;
-            min-width: 30px;
-            text-align: center;
-        }
-
-        /* ===== СТАТУС VPN ===== */
-        .status-badge {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            background: rgba(0, 184, 107, 0.08);
-            padding: 4px 12px;
-            border-radius: 60px;
-            width: fit-content;
-            margin: 0 auto 12px;
-            border: 1px solid rgba(0, 184, 107, 0.08);
-        }
-
-        .status-badge .dot {
-            width: 6px;
-            height: 6px;
-            background: #00b86b;
-            border-radius: 50%;
-            animation: pulseDot 2s ease-in-out infinite;
-        }
-
-        .status-badge .label {
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 11px;
-            font-weight: 500;
-        }
-
-        .status-badge .status-text {
-            color: #00b86b;
-            font-size: 11px;
-            font-weight: 600;
-        }
-
-        /* ===== ЛОГО ===== */
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 12px;
-        }
-
-        .logo-icon {
-            width: 44px;
-            height: 44px;
-            background: linear-gradient(135deg, #ff3b3b, #ff6b3b);
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            box-shadow: 0 8px 24px rgba(255, 59, 59, 0.12);
-            flex-shrink: 0;
-        }
-
-        .logo-text {
-            font-size: 20px;
-            font-weight: 700;
-            color: white;
-            letter-spacing: -0.5px;
-        }
-
-        .logo-text span {
-            color: #ff4a4a;
-        }
-
-        /* ===== ТЕКСТ ===== */
-        .greeting {
-            font-size: 28px;
-            font-weight: 700;
-            color: white;
-            line-height: 1.2;
-            margin-bottom: 4px;
-        }
-
-        .greeting-light {
-            color: rgba(255, 255, 255, 0.5);
-            font-weight: 400;
-        }
-
-        .desc {
-            color: rgba(255, 255, 255, 0.35);
-            font-size: 14px;
-            line-height: 1.6;
-            margin-bottom: 16px;
+            font-size: 15px;
         }
 
         /* ===== КНОПКИ ===== */
-        .btn-primary {
+        .btn {
             display: block;
             width: 100%;
-            padding: 16px;
+            padding: 15px 20px;
             border: none;
-            border-radius: 16px;
+            border-radius: 60px;
             font-size: 16px;
             font-weight: 600;
-            color: white;
-            background: linear-gradient(135deg, #ff3b3b, #d32f2f);
+            color: #fff;
+            background: #cc0000;
             cursor: pointer;
-            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-            margin: 8px 0;
-            box-shadow: 0 8px 28px rgba(255, 59, 59, 0.12);
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            margin: 6px 0;
+            box-shadow: 0 8px 24px rgba(204, 0, 0, 0.2);
+            letter-spacing: 0.3px;
             position: relative;
             overflow: hidden;
         }
 
-        .btn-primary::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(255,255,255,0.05), transparent 60%);
-            pointer-events: none;
+        .btn:hover {
+            transform: scale(1.02) translateY(-3px);
+            box-shadow: 0 14px 36px rgba(204, 0, 0, 0.35);
         }
 
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 36px rgba(255, 59, 59, 0.2);
-        }
-
-        .btn-primary:active {
+        .btn:active {
             transform: scale(0.97);
         }
 
-        .btn-secondary {
-            display: block;
-            width: 100%;
-            padding: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 16px;
-            font-size: 15px;
-            font-weight: 500;
+        .btn-ghost {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 0, 0, 0.06);
+            box-shadow: none;
             color: rgba(255, 255, 255, 0.6);
-            background: rgba(255, 255, 255, 0.02);
-            cursor: pointer;
-            transition: all 0.2s;
-            margin: 6px 0;
         }
 
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.04);
-            border-color: rgba(255, 255, 255, 0.1);
+        .btn-ghost:hover {
+            background: rgba(255, 0, 0, 0.04);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
         }
 
-        .btn-share {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 60px;
-            font-size: 13px;
-            font-weight: 500;
-            color: white;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            cursor: pointer;
-            transition: all 0.2s;
-            width: 100%;
-            margin-top: 6px;
+        .btn-gold {
+            background: #cc0000;
+            box-shadow: 0 8px 24px rgba(204, 0, 0, 0.2);
+        }
+        .btn-gold:hover {
+            box-shadow: 0 14px 36px rgba(204, 0, 0, 0.35);
         }
 
-        .btn-share:hover {
-            background: rgba(255, 255, 255, 0.08);
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid rgba(255, 0, 0, 0.12);
+            color: rgba(255, 255, 255, 0.6);
+            box-shadow: none;
+        }
+        .btn-outline:hover {
+            background: rgba(255, 0, 0, 0.04);
+            border-color: rgba(255, 0, 0, 0.2);
         }
 
-        /* ===== ТАРИФЫ ===== */
-        .tier {
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 20px;
-            padding: 18px 20px;
-            margin: 10px 0;
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            transition: all 0.3s;
-            cursor: default;
-        }
-
-        .tier:hover {
-            border-color: rgba(255, 59, 59, 0.1);
+        .btn-copy {
             background: rgba(255, 255, 255, 0.03);
-        }
-
-        .tier-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 4px;
-        }
-
-        .tier-name {
-            color: white;
-            font-size: 18px;
-            font-weight: 600;
-        }
-
-        .tier-price {
-            font-size: 22px;
-            font-weight: 700;
-            color: #ff5e5e;
-        }
-
-        .tier-desc {
-            color: rgba(255, 255, 255, 0.35);
-            font-size: 13px;
-            margin-bottom: 12px;
-        }
-
-        .tier .btn-primary,
-        .tier .btn-secondary {
-            margin: 0;
-        }
-
-        /* ===== БЕСПЛАТНЫЙ ТАРИФ ===== */
-        .copy-link {
-            display: block;
-            background: rgba(255, 255, 255, 0.03);
-            padding: 14px;
-            border-radius: 14px;
-            word-break: break-all;
-            text-align: center;
-            color: #ff5e5e;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
-            border: 1px solid rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 0, 0, 0.06);
+            color: rgba(255, 255, 255, 0.6);
+            box-shadow: none;
             font-size: 14px;
-            user-select: all;
-            margin: 8px 0;
+            padding: 10px;
+            margin-top: 4px;
         }
 
-        .copy-link:hover {
-            background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(255, 59, 59, 0.1);
-            transform: scale(1.01);
+        .btn-copy:hover {
+            background: rgba(255, 0, 0, 0.04);
         }
 
-        .copy-link:active {
-            transform: scale(0.98);
+        .btn-copy.copied {
+            border-color: #ff0000;
+            color: #ff0000;
         }
 
-        .copy-link.copied {
-            border-color: #00b86b;
-            color: #00b86b;
-        }
-
-        /* ===== FAQ ===== */
-        .faq {
+        /* ===== ПЛАНЫ ===== */
+        .plan {
             background: rgba(255, 255, 255, 0.02);
-            border-radius: 20px;
+            backdrop-filter: blur(4px);
+            border-radius: 28px;
             padding: 16px 18px;
-            margin-top: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.03);
-        }
-
-        .faq-title {
-            color: white;
-            font-size: 16px;
-            font-weight: 600;
-            text-align: center;
-            margin-bottom: 10px;
-        }
-
-        .faq-item {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-            padding: 8px 0;
-        }
-
-        .faq-item:last-child {
-            border-bottom: none;
-        }
-
-        .faq-question {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 13px;
-            font-weight: 500;
-            cursor: pointer;
+            margin: 8px 0;
+            border: 1px solid rgba(255, 0, 0, 0.04);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            opacity: 1;
+            transform: translateY(0);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: 0.2s;
         }
 
-        .faq-question:hover {
-            color: white;
+        .plan:hover {
+            border-color: rgba(255, 0, 0, 0.15);
+            background: rgba(255, 0, 0, 0.03);
+            transform: translateY(-2px);
         }
 
-        .faq-question .arrow {
-            transition: 0.3s;
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.2);
+        .plan-left {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
         }
 
-        .faq-question.active .arrow {
-            transform: rotate(180deg);
-        }
-
-        .faq-answer {
-            color: rgba(255, 255, 255, 0.35);
-            font-size: 13px;
-            line-height: 1.6;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease, padding 0.3s ease;
-            padding-top: 0;
-        }
-
-        .faq-answer.open {
-            max-height: 200px;
-            padding-top: 6px;
-        }
-
-        /* ===== ИНСТРУКЦИЯ ===== */
-        .guide {
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 20px;
-            padding: 18px 20px;
-            margin-top: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.03);
-        }
-
-        .guide-title {
-            color: white;
+        .plan-title {
+            color: #fff;
             font-size: 16px;
             font-weight: 600;
-            margin-bottom: 8px;
-            text-align: center;
         }
 
-        .guide-step {
+        .plan-desc {
+            color: rgba(255, 255, 255, 0.35);
+            font-size: 12px;
+        }
+
+        .plan-right {
             display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            padding: 6px 0;
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 13px;
-            line-height: 1.5;
+            flex-direction: column;
+            align-items: flex-end;
         }
 
-        .guide-step .num {
-            width: 22px;
-            height: 22px;
-            background: rgba(255, 59, 59, 0.08);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 11px;
-            font-weight: 600;
-            color: #ff5e5e;
-            flex-shrink: 0;
-            margin-top: 1px;
+        .plan-price {
+            font-size: 20px;
+            font-weight: 700;
+            color: #ff3333;
         }
 
-        .guide-step a {
-            color: #ff5e5e;
-            text-decoration: none;
+        .plan-price-gold {
+            color: #ff4444;
         }
 
-        .guide-step a:hover {
-            text-decoration: underline;
-        }
-
-        /* ===== ОПЛАТА ===== */
-        .payment-box {
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 20px;
-            padding: 20px;
-            border: 1px solid rgba(255, 59, 59, 0.06);
-            margin: 10px 0;
-        }
-
-        .payment-box .tier-price {
-            text-align: center;
-            display: block;
-            margin-bottom: 4px;
-        }
-
-        .card-number-display {
-            background: rgba(255, 255, 255, 0.03);
-            padding: 14px;
-            border-radius: 14px;
-            font-family: 'SF Mono', monospace;
-            font-size: 17px;
-            letter-spacing: 2px;
-            color: #ff5e5e;
-            font-weight: 600;
-            text-align: center;
-            border: 1px dashed rgba(255, 59, 59, 0.08);
-            margin: 10px 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-
-        .copy-btn {
-            background: rgba(255, 255, 255, 0.04);
+        .plan-btn {
+            padding: 6px 16px;
             border: none;
-            color: rgba(255, 255, 255, 0.4);
-            padding: 6px 14px;
             border-radius: 40px;
             font-size: 12px;
+            font-weight: 600;
+            color: #fff;
+            background: #cc0000;
             cursor: pointer;
             transition: all 0.2s;
-            font-family: inherit;
+            margin-top: 4px;
+            width: auto;
         }
 
-        .copy-btn:hover {
-            background: rgba(255, 255, 255, 0.08);
-            color: white;
+        .plan-btn:hover {
+            transform: scale(1.05);
         }
 
-        .copy-btn.copied {
-            color: #00b86b;
+        .plan-btn-gold {
+            background: #cc0000;
         }
 
-        .warning {
-            background: rgba(255, 59, 59, 0.04);
-            padding: 12px;
-            border-radius: 14px;
+        /* ===== ПРОМОКОДЫ ===== */
+        .promo-box {
+            background: rgba(255, 0, 0, 0.04);
+            border: 1px solid rgba(255, 0, 0, 0.08);
+            border-radius: 28px;
+            padding: 20px;
+            margin: 10px 0;
             text-align: center;
+        }
+
+        .promo-code {
+            display: inline-block;
+            background: rgba(255, 0, 0, 0.06);
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-family: 'SF Mono', monospace;
+            font-size: 20px;
+            font-weight: 700;
+            color: #ff3333;
+            letter-spacing: 2px;
+            border: 1px dashed rgba(255, 0, 0, 0.15);
+        }
+
+        .promo-desc {
             color: rgba(255, 255, 255, 0.5);
             font-size: 13px;
-            border: 1px solid rgba(255, 59, 59, 0.04);
-            margin: 10px 0;
-        }
-
-        .warning strong {
-            color: #ff3b3b;
-        }
-
-        .qr-wrapper {
-            display: flex;
-            justify-content: center;
-            margin: 12px 0;
-        }
-
-        .qr-wrapper canvas {
-            background: white;
-            padding: 8px;
-            border-radius: 16px;
-            width: 120px;
-            height: 120px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-            animation: qrAppear 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        @keyframes qrAppear {
-            0% { opacity: 0; transform: scale(0.8) rotate(-5deg); }
-            100% { opacity: 1; transform: scale(1) rotate(0deg); }
+            margin-top: 8px;
         }
 
         /* ===== НАВИГАЦИЯ ===== */
         .nav {
             display: flex;
-            gap: 4px;
+            gap: 3px;
             margin-top: 20px;
             padding-top: 16px;
-            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            border-top: 1px solid rgba(255, 0, 0, 0.04);
         }
 
         .nav-btn {
             flex: 1;
-            padding: 8px 0;
+            padding: 6px 0;
             border: none;
-            border-radius: 12px;
+            border-radius: 10px;
             background: rgba(255, 255, 255, 0.02);
             color: rgba(255, 255, 255, 0.3);
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.3s;
             text-align: center;
-            line-height: 1.3;
+            line-height: 1.2;
         }
 
         .nav-btn:hover {
-            background: rgba(255, 255, 255, 0.04);
+            background: rgba(255, 0, 0, 0.04);
             color: rgba(255, 255, 255, 0.6);
         }
 
         .nav-btn.active {
-            background: rgba(255, 59, 59, 0.06);
-            color: #ff5e5e;
+            background: rgba(255, 0, 0, 0.06);
+            color: #ff3333;
         }
 
         .nav-btn .icon {
             display: block;
-            font-size: 16px;
+            font-size: 14px;
             margin-bottom: 1px;
         }
 
-        /* ===== СТРАНИЦЫ ===== */
-        .page {
-            display: block;
-            animation: fadeUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        /* ===== ИНСТРУКЦИЯ ===== */
+        .instruction {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(4px);
+            border-radius: 28px;
+            padding: 18px 20px;
+            margin-top: 14px;
+            border: 1px solid rgba(255, 0, 0, 0.04);
+            text-align: left;
+            color: rgba(255, 255, 255, 0.75);
+            font-size: 14px;
+            line-height: 1.7;
         }
 
-        .page.hidden {
-            display: none;
+        .instruction h3 {
+            color: #fff;
+            font-size: 17px;
+            text-align: center;
+            margin-bottom: 10px;
         }
 
-        @keyframes fadeUp {
-            0% { opacity: 0; transform: translateY(14px); }
-            100% { opacity: 1; transform: translateY(0); }
+        .step {
+            background: rgba(255, 0, 0, 0.03);
+            padding: 8px 14px;
+            border-radius: 16px;
+            margin: 6px 0;
+            border-left: 2px solid #cc0000;
+        }
+
+        .step-done {
+            border-left-color: #cc0000;
+        }
+
+        .instruction a {
+            color: #ff3333;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .instruction a:hover {
+            text-decoration: underline;
+        }
+
+        /* ===== ОПЛАТА ===== */
+        .card-number {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 12px;
+            border-radius: 18px;
+            font-family: 'SF Mono', monospace;
+            font-size: 18px;
+            letter-spacing: 2.5px;
+            border: 1px dashed rgba(255, 0, 0, 0.15);
+            color: #ff3333;
+            font-weight: 600;
+            margin: 8px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .notice {
+            background: rgba(255, 0, 0, 0.04);
+            padding: 12px;
+            border-radius: 18px;
+            border: 1px solid rgba(255, 0, 0, 0.06);
+            margin: 10px 0;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 13px;
+        }
+
+        .notice strong {
+            color: #ff0000;
         }
 
         /* ===== ПОДДЕРЖКА ===== */
         .support-box {
             background: rgba(255, 255, 255, 0.02);
-            border-radius: 20px;
+            border-radius: 28px;
             padding: 24px 20px;
-            border: 1px solid rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 0, 0, 0.03);
             text-align: center;
             margin: 10px 0;
         }
@@ -787,85 +536,35 @@
             display: inline-block;
             padding: 12px 28px;
             border-radius: 16px;
-            background: linear-gradient(135deg, #ff3b3b, #d32f2f);
+            background: linear-gradient(135deg, #cc0000, #990000);
             color: white;
             font-weight: 600;
             text-decoration: none;
             font-size: 15px;
             transition: all 0.2s;
-            box-shadow: 0 8px 28px rgba(255, 59, 59, 0.12);
+            box-shadow: 0 8px 28px rgba(204, 0, 0, 0.12);
         }
 
         .support-box .support-contact:hover {
             transform: translateY(-2px);
-            box-shadow: 0 12px 36px rgba(255, 59, 59, 0.2);
+            box-shadow: 0 12px 36px rgba(204, 0, 0, 0.2);
         }
 
-        /* ===== ТОСТ-УВЕДОМЛЕНИЕ ===== */
-        .toast {
-            position: fixed;
-            bottom: 100px;
-            left: 50%;
-            transform: translateX(-50%) translateY(20px);
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            padding: 12px 24px;
-            border-radius: 60px;
-            color: white;
-            font-size: 14px;
-            font-weight: 500;
-            z-index: 100;
-            opacity: 0;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            pointer-events: none;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        /* ===== СТРАНИЦЫ ===== */
+        .page {
+            display: block;
+            animation: fadeUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        .toast.show {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
+        .page.hidden {
+            display: none;
         }
 
-        .toast .icon {
-            margin-right: 8px;
+        @keyframes fadeUp {
+            0% { opacity: 0; transform: translateY(14px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
 
-        /* ===== КНОПКА "НАВЕРХ" ===== */
-        .scroll-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            border: none;
-            background: rgba(255, 59, 59, 0.12);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            color: white;
-            font-size: 20px;
-            cursor: pointer;
-            z-index: 50;
-            opacity: 0;
-            transform: scale(0.8);
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        .scroll-top.visible {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        .scroll-top:hover {
-            background: rgba(255, 59, 59, 0.2);
-            transform: scale(1.05);
-        }
-
-        /* ===== ВСПОМОГАТЕЛЬНОЕ ===== */
         .hidden {
             display: none !important;
         }
@@ -874,246 +573,210 @@
             margin-top: 12px;
         }
 
-        .text-center {
-            text-align: center;
-        }
-
         /* ===== АДАПТИВ ===== */
         @media (max-width: 480px) {
-            .cosmic-card {
-                padding: 22px 16px;
-                border-radius: 28px;
+            .glass {
+                padding: 24px 18px;
+                border-radius: 32px;
             }
-            .greeting {
-                font-size: 24px;
+            .headline {
+                font-size: 26px;
             }
-            .logo-text {
-                font-size: 18px;
+            .rocket {
+                font-size: 56px;
             }
-            .tier-price {
-                font-size: 20px;
-            }
-            .card-number-display {
+            .card-number {
                 font-size: 15px;
                 letter-spacing: 1.5px;
-                padding: 12px;
+                flex-wrap: wrap;
+                gap: 8px;
             }
-            .qr-wrapper canvas {
-                width: 100px;
-                height: 100px;
+            .plan {
+                flex-wrap: wrap;
+                gap: 6px;
+            }
+            .plan-right {
+                align-items: flex-start;
+                width: 100%;
+                flex-direction: row;
+                justify-content: space-between;
+            }
+            .plan-btn {
+                padding: 4px 12px;
+                font-size: 11px;
             }
             .nav-btn {
-                font-size: 10px;
-                padding: 6px 0;
+                font-size: 9px;
+                padding: 4px 0;
             }
             .nav-btn .icon {
-                font-size: 14px;
-            }
-            .scroll-top {
-                bottom: 20px;
-                right: 20px;
-                width: 38px;
-                height: 38px;
-                font-size: 16px;
-            }
-            .toast {
                 font-size: 12px;
-                padding: 10px 18px;
-                bottom: 80px;
             }
-            .splash .logo-big {
-                font-size: 40px;
+            .promo-code {
+                font-size: 16px;
             }
         }
 
         @media (max-width: 380px) {
-            .cosmic-card {
-                padding: 16px 12px;
-                border-radius: 24px;
+            .glass {
+                padding: 18px 14px;
+                border-radius: 28px;
             }
-            .greeting {
-                font-size: 20px;
+            .headline {
+                font-size: 22px;
             }
-            .btn-primary {
-                padding: 14px;
+            .plan-title {
                 font-size: 14px;
+            }
+            .plan-price {
+                font-size: 17px;
             }
             .support-box .support-contact {
                 padding: 10px 20px;
                 font-size: 13px;
-            }
-            .copy-link {
-                font-size: 12px;
-                padding: 12px;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- ===== SPLASH SCREEN ===== -->
-    <div class="splash" id="splash">
-        <div class="logo-big">Fzzrix <span>VPN</span></div>
-        <div class="loader"></div>
-    </div>
-
-    <!-- ===== ТОСТ ===== -->
-    <div class="toast" id="toast">
-        <span class="icon">✅</span> Скопировано!
-    </div>
-
-    <!-- ===== КНОПКА "НАВЕРХ" ===== -->
-    <button class="scroll-top" id="scrollTop" onclick="scrollToTop()">↑</button>
-
     <!-- ===== ЖИДКОЕ СТЕКЛО ===== -->
     <div class="glass-bg"></div>
 
-    <!-- ===== ЗВЁЗДЫ ===== -->
-    <div class="stars" id="stars"></div>
-
-    <!-- ===== МЕТЕОРЫ ===== -->
-    <div class="meteor" style="top: 10%; left: 70%; animation-duration: 6s; animation-delay: 0s;"></div>
-    <div class="meteor" style="top: 20%; left: 40%; animation-duration: 8s; animation-delay: 4s;"></div>
-    <div class="meteor" style="top: 5%; left: 85%; animation-duration: 7s; animation-delay: 9s;"></div>
+    <!-- ===== РАКЕТА ===== -->
+    <div class="rocket-wrap" id="rocketWrap">
+        <div class="rocket" id="rocket">
+            🚀
+            <span class="rocket-fire">🔥</span>
+        </div>
+    </div>
 
     <!-- ===== ГЛАВНАЯ КАРТА ===== -->
-    <div class="cosmic-card" id="app">
+    <div class="glass" id="app">
 
-        <!-- ЛОГО -->
-        <div class="logo">
-            <div class="logo-icon">✦</div>
-            <div class="logo-text">Fzzrix <span>VPN</span></div>
+        <!-- ШАПКА -->
+        <div class="eyebrow">⚡ МОЛНИЯ VPN</div>
+        <div class="headline">
+            Добро пожаловать<br>
+            в <span>защищённый</span> интернет
         </div>
+        <div class="subhead" id="subText">Выбери свой тариф</div>
 
-        <!-- ===== СТАТУС VPN ===== -->
-        <div class="status-badge">
-            <span class="dot"></span>
-            <span class="label">Статус:</span>
-            <span class="status-text">Защищено</span>
-        </div>
-
-        <!-- ===== СЧЁТЧИК ===== -->
+        <!-- СЧЁТЧИК -->
         <div class="counter">
             <span class="counter-dot"></span>
-            <span class="counter-text">VPN онлайн:</span>
-            <span class="counter-number" id="userCounter">0</span>
+            <span class="counter-text">Сейчас с нами</span>
+            <span class="counter-number" id="userCount">328</span>
+            <span class="counter-text">человек</span>
         </div>
 
         <!-- ===== СТРАНИЦА: ГЛАВНАЯ ===== -->
         <div class="page" id="pageHome">
-            <div class="greeting">
-                Добро пожаловать<br>
-                <span class="greeting-light">в безопасный интернет</span>
+            <div style="text-align: center; padding: 20px 0;">
+                <div style="font-size: 64px; margin-bottom: 12px;">⚡</div>
+                <div style="color: white; font-size: 20px; font-weight: 600;">Мгновенная защита</div>
+                <div style="color: rgba(255,255,255,0.4); font-size: 14px; margin-top: 6px; line-height: 1.6;">
+                    Перейди в «Магазин», чтобы выбрать тариф<br>
+                    и получить доступ к VPN
+                </div>
+                <button class="btn-ghost" onclick="switchPage('shop')" style="margin-top: 16px; width: 100%; padding: 14px; border-radius: 60px; border: 1px solid rgba(255,0,0,0.06); background: rgba(255,0,0,0.02); color: rgba(255,255,255,0.5); cursor: pointer; font-size: 14px;">
+                    🛒 Перейти в магазин
+                </button>
             </div>
-            <div class="desc">Нажми «Магазин», чтобы выбрать тариф</div>
-
-            <!-- КНОПКА ПОДЕЛИТЬСЯ -->
-            <button class="btn-share" onclick="shareSite()">
-                📤 Поделиться с друзьями
-            </button>
         </div>
 
         <!-- ===== СТРАНИЦА: МАГАЗИН ===== -->
         <div class="page hidden" id="pageShop">
-            <div class="greeting" style="font-size: 22px; margin-bottom: 12px;">
-                🛒 <span class="greeting-light">Выбери свой тариф</span>
+            <div class="subhead" style="margin-bottom: 8px; font-size: 13px; text-align: center;">Выбери свой тариф:</div>
+
+            <div class="plan fade-up">
+                <div class="plan-left">
+                    <span class="plan-title">📅 1 месяц</span>
+                    <span class="plan-desc">Доступ на 30 дней</span>
+                </div>
+                <div class="plan-right">
+                    <span class="plan-price">50 ₽</span>
+                    <button class="plan-btn" onclick="showPayment(50, '1 месяц', 30)">Выбрать</button>
+                </div>
             </div>
 
-            <!-- БЕСПЛАТНО -->
-            <div class="tier fade-up">
-                <div class="tier-header">
-                    <span class="tier-name">🆓 Бесплатно</span>
-                    <span class="tier-price">0 ₽</span>
+            <div class="plan fade-up" style="animation-delay: 0.04s;">
+                <div class="plan-left">
+                    <span class="plan-title">📅 2 месяца</span>
+                    <span class="plan-desc">Доступ на 60 дней</span>
                 </div>
-                <div class="tier-desc">Базовый доступ</div>
-                <div class="copy-link" id="freeLink" onclick="copyFreeLink()">
-                    📋 https://tri.su/nbAGa
+                <div class="plan-right">
+                    <span class="plan-price">100 ₽</span>
+                    <button class="plan-btn" onclick="showPayment(100, '2 месяца', 60)">Выбрать</button>
                 </div>
-                <button class="btn-secondary" onclick="copyFreeLink()" style="margin-top: 0;">📋 Скопировать ссылку</button>
             </div>
 
-            <!-- ПРЕМИУМ 50 ₽ -->
-            <div class="tier fade-up" style="animation-delay: 0.06s;">
-                <div class="tier-header">
-                    <span class="tier-name">💎 Премиум</span>
-                    <span class="tier-price">50 ₽</span>
+            <div class="plan fade-up" style="animation-delay: 0.08s;">
+                <div class="plan-left">
+                    <span class="plan-title">📅 3 месяца</span>
+                    <span class="plan-desc">Доступ на 90 дней</span>
                 </div>
-                <div class="tier-desc">Максимальная скорость</div>
-                <button class="btn-primary" onclick="showPremium(50)">Купить за 50 ₽</button>
+                <div class="plan-right">
+                    <span class="plan-price">150 ₽</span>
+                    <button class="plan-btn" onclick="showPayment(150, '3 месяца', 90)">Выбрать</button>
+                </div>
             </div>
 
-            <!-- ПРЕМИУМ НАВСЕГДА 100 ₽ -->
-            <div class="tier fade-up" style="animation-delay: 0.12s;">
-                <div class="tier-header">
-                    <span class="tier-name">💎 Премиум навсегда</span>
-                    <span class="tier-price" style="color: #d9a024;">100 ₽</span>
+            <div class="plan fade-up" style="animation-delay: 0.12s;">
+                <div class="plan-left">
+                    <span class="plan-title">📅 4 месяца</span>
+                    <span class="plan-desc">Доступ на 120 дней</span>
                 </div>
-                <div class="tier-desc">Доступ даже если VPN закроют</div>
-                <button class="btn-primary" style="background: linear-gradient(135deg, #d9a024, #b8860b); box-shadow: 0 8px 28px rgba(217, 160, 36, 0.12);" onclick="showPremium(100)">Купить за 100 ₽</button>
+                <div class="plan-right">
+                    <span class="plan-price">200 ₽</span>
+                    <button class="plan-btn" onclick="showPayment(200, '4 месяца', 120)">Выбрать</button>
+                </div>
             </div>
 
-            <!-- КНОПКА ПОДЕЛИТЬСЯ -->
-            <button class="btn-share" onclick="shareSite()" style="margin-top: 12px;">
+            <div class="plan fade-up" style="animation-delay: 0.16s; border-color: rgba(255, 0, 0, 0.15);">
+                <div class="plan-left">
+                    <span class="plan-title">⭐ 5 месяцев</span>
+                    <span class="plan-desc">Доступ на 150 дней</span>
+                </div>
+                <div class="plan-right">
+                    <span class="plan-price plan-price-gold">250 ₽</span>
+                    <button class="plan-btn plan-btn-gold" onclick="showPayment(250, '5 месяцев', 150)">Выбрать</button>
+                </div>
+            </div>
+
+            <button class="btn-ghost" onclick="shareSite()" style="margin-top: 8px; width: 100%; padding: 12px; border-radius: 60px; border: 1px solid rgba(255,0,0,0.06); background: rgba(255,0,0,0.02); color: rgba(255,255,255,0.5); cursor: pointer; font-size: 14px;">
                 📤 Поделиться с друзьями
             </button>
         </div>
 
         <!-- ===== СТРАНИЦА: ИНСТРУКЦИЯ ===== -->
         <div class="page hidden" id="pageHelp">
-            <div class="greeting" style="font-size: 22px; margin-bottom: 12px;">
-                📖 <span class="greeting-light">Инструкция</span>
+            <div class="headline" style="font-size: 22px; margin-bottom: 12px;">
+                📖 <span style="color: rgba(255,255,255,0.5); font-weight: 400;">Как добавить подписку</span>
             </div>
 
-            <div class="guide" style="margin-top: 0;">
-                <div class="guide-title">Как подключить VPN</div>
-                <div class="guide-step">
-                    <span class="num">1</span>
-                    <span>Скачай <strong style="color:white;">Happ</strong>: <a href="https://apps.apple.com/us/app/happ-proxy-utility/id6504287215?l=ru" target="_blank">iOS</a> / <a href="https://play.google.com/store/apps/details?id=com.happproxy" target="_blank">Android</a></span>
+            <div class="instruction" style="margin-top: 0;">
+                <h3>📥 Как добавить подписку в Happ</h3>
+                <div class="step"><strong>1.</strong> Скачай приложение <strong>Happ Proxy Utility</strong>:<br>
+                    <a href="https://apps.apple.com/us/app/happ-proxy-utility/id6504287215?l=ru" target="_blank">📱 iPhone (App Store)</a><br>
+                    <a href="https://play.google.com/store/apps/details?id=com.happproxy" target="_blank">📱 Android (Google Play)</a>
                 </div>
-                <div class="guide-step">
-                    <span class="num">2</span>
-                    <span>Нажми <strong style="color:white;">«➕ Добавить подписку»</strong></span>
-                </div>
-                <div class="guide-step">
-                    <span class="num">3</span>
-                    <span>Вставь ссылку → <strong style="color:white;">«Добавить»</strong></span>
-                </div>
-                <div class="guide-step">
-                    <span class="num">4</span>
-                    <span>Выбери сервер → <strong style="color:white;">«Подключиться»</strong></span>
-                </div>
-                <div class="guide-step" style="color: #00b86b;">
-                    <span class="num" style="background: rgba(0,184,107,0.08); color: #00b86b;">✓</span>
-                    <span>Готово! Ты защищён 🎉</span>
-                </div>
+                <div class="step"><strong>2.</strong> Нажми на кнопку <strong>«➕ Добавить подписку»</strong> внизу экрана</div>
+                <div class="step"><strong>3.</strong> Выбери <strong>«Вставить из буфера обмена»</strong></div>
+                <div class="step"><strong>4.</strong> Вставь ссылку, которую получишь после оплаты у <strong>@Fzzrix</strong></div>
+                <div class="step"><strong>5.</strong> Выбери сервер (Польша или Финляндия)</div>
+                <div class="step step-done"><strong>✅ Готово!</strong> Ты подключён 🎉</div>
             </div>
 
-            <div class="guide" style="margin-top: 10px;">
-                <div class="guide-title">🚀 Быстрый старт</div>
-                <div class="guide-step">
-                    <span class="num">1</span>
-                    <span>Выбери тариф в <strong style="color:white;">«Магазин»</strong></span>
-                </div>
-                <div class="guide-step">
-                    <span class="num">2</span>
-                    <span>Оплати</span>
-                </div>
-                <div class="guide-step">
-                    <span class="num">3</span>
-                    <span>Добавь ссылку в Happ</span>
-                </div>
-            </div>
-
-            <!-- КНОПКА ПОДЕЛИТЬСЯ -->
-            <button class="btn-share" onclick="shareSite()" style="margin-top: 12px;">
+            <button class="btn-ghost" onclick="shareSite()" style="margin-top: 12px; width: 100%; padding: 12px; border-radius: 60px; border: 1px solid rgba(255,0,0,0.06); background: rgba(255,0,0,0.02); color: rgba(255,255,255,0.5); cursor: pointer; font-size: 14px;">
                 📤 Поделиться с друзьями
             </button>
         </div>
 
         <!-- ===== СТРАНИЦА: ПОДДЕРЖКА ===== -->
         <div class="page hidden" id="pageSupport">
-            <div class="greeting" style="font-size: 22px; margin-bottom: 12px;">
-                🆘 <span class="greeting-light">Поддержка VPN</span>
+            <div class="headline" style="font-size: 22px; margin-bottom: 12px;">
+                🆘 <span style="color: rgba(255,255,255,0.5); font-weight: 400;">Поддержка</span>
             </div>
 
             <div class="support-box">
@@ -1129,77 +792,73 @@
                 </a>
             </div>
 
-            <!-- ===== FAQ ===== -->
-            <div class="faq">
-                <div class="faq-title">❓ Часто задаваемые вопросы</div>
+            <button class="btn-ghost" onclick="shareSite()" style="margin-top: 12px; width: 100%; padding: 12px; border-radius: 60px; border: 1px solid rgba(255,0,0,0.06); background: rgba(255,0,0,0.02); color: rgba(255,255,255,0.5); cursor: pointer; font-size: 14px;">
+                📤 Поделиться с друзьями
+            </button>
+        </div>
 
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFaq(this)">
-                        Как добавить подписку в Happ?
-                        <span class="arrow">▼</span>
-                    </div>
-                    <div class="faq-answer">
-                        Открой приложение Happ, нажми «➕ Добавить подписку», вставь ссылку и нажми «Добавить».
-                    </div>
-                </div>
+        <!-- ===== СТРАНИЦА: ПРОМОКОДЫ ===== -->
+        <div class="page hidden" id="pagePromo">
+            <div class="headline" style="font-size: 22px; margin-bottom: 12px;">
+                🎫 <span style="color: rgba(255,255,255,0.5); font-weight: 400;">Промокоды</span>
+            </div>
 
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFaq(this)">
-                        Почему не работает VPN?
-                        <span class="arrow">▼</span>
-                    </div>
-                    <div class="faq-answer">
-                        Проверь интернет-соединение, попробуй переключить сервер или переустановить подписку.
-                    </div>
-                </div>
+            <div class="promo-box">
+                <div style="font-size: 14px; color: rgba(255,255,255,0.3); margin-bottom: 6px;">Активный промокод</div>
+                <div class="promo-code" id="promoCodeDisplay">Fzzrix</div>
+                <div class="promo-desc">Скидка 10% на любой тариф</div>
+                <button class="btn-copy" onclick="copyPromo()" style="margin-top: 12px; width: auto; display: inline-block; padding: 8px 24px; border-radius: 40px; background: rgba(255,0,0,0.04); border: 1px solid rgba(255,0,0,0.08); color: #ff3333; cursor: pointer; font-size: 13px; font-weight: 600;">
+                    📋 Скопировать промокод
+                </button>
+            </div>
 
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFaq(this)">
-                        Как продлить подписку?
-                        <span class="arrow">▼</span>
-                    </div>
-                    <div class="faq-answer">
-                        Напиши @Fzzrix для продления. Оплата производится через МТС Банк на ту же карту.
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFaq(this)">
-                        Что делать, если не приходит ссылка?
-                        <span class="arrow">▼</span>
-                    </div>
-                    <div class="faq-answer">
-                        Проверь папку «Спам» в Telegram или напиши в поддержку @Fzzrix_VPN_Support.
-                    </div>
+            <div style="margin-top: 16px; padding: 16px; background: rgba(255,255,255,0.02); border-radius: 20px; border: 1px solid rgba(255,0,0,0.03);">
+                <div style="color: rgba(255,255,255,0.3); font-size: 13px; text-align: center; line-height: 1.6;">
+                    💡 Введи промокод при оплате<br>
+                    и получи скидку 10% на любой тариф
                 </div>
             </div>
 
-            <!-- КНОПКА ПОДЕЛИТЬСЯ -->
-            <button class="btn-share" onclick="shareSite()" style="margin-top: 12px;">
+            <button class="btn-ghost" onclick="shareSite()" style="margin-top: 12px; width: 100%; padding: 12px; border-radius: 60px; border: 1px solid rgba(255,0,0,0.06); background: rgba(255,0,0,0.02); color: rgba(255,255,255,0.5); cursor: pointer; font-size: 14px;">
                 📤 Поделиться с друзьями
             </button>
         </div>
 
         <!-- ===== ОПЛАТА ===== -->
         <div id="payment" class="hidden">
-            <div class="payment-box fade-up">
-                <span class="tier-price" id="payPrice" style="display: block; text-align: center;">50 ₽</span>
-                <div style="text-align: center; color: white; font-weight: 600; font-size: 18px; margin-bottom: 4px;" id="payTitle">💎 Премиум</div>
-
-                <div class="card-number-display">
-                    <span>💳 2203 8302 4035 5850</span>
-                    <button class="copy-btn" id="copyBtn" onclick="copyCard()">📋 Копировать</button>
+            <div class="plan" style="border-color: rgba(255, 0, 0, 0.15); flex-wrap: wrap; justify-content: center; text-align: center;">
+                <div style="width: 100%;">
+                    <span style="color: rgba(255,255,255,0.4); font-size: 13px;">Вы выбрали</span>
+                    <div style="color: white; font-weight: 600; font-size: 18px;" id="payTitle">📅 1 месяц</div>
+                    <div style="font-size: 28px; font-weight: 700; color: #ff3333; margin: 4px 0;" id="payPrice">50 ₽</div>
+                    <div style="color: rgba(255,255,255,0.3); font-size: 13px;" id="payDays">30 дней доступа</div>
                 </div>
 
-                <div style="text-align: center; color: rgba(255,255,255,0.2); font-size: 12px; margin-bottom: 6px;">МТС Банк</div>
-
-                <div class="qr-wrapper" id="qrContainer"></div>
-
-                <div class="warning">
-                    ⚠️ <strong>ОБЯЗАТЕЛЬНО!</strong> После оплаты напишите <strong>@Fzzrix</strong>
+                <!-- ПРОМОКОД -->
+                <div style="width: 100%; margin-top: 8px; padding: 10px; background: rgba(255,0,0,0.03); border-radius: 16px; border: 1px solid rgba(255,0,0,0.06);">
+                    <div style="display: flex; gap: 8px; align-items: center; justify-content: center; flex-wrap: wrap;">
+                        <input type="text" id="promoInput" placeholder="Введи промокод" style="padding: 8px 14px; border-radius: 40px; border: 1px solid rgba(255,255,255,0.06); background: rgba(255,255,255,0.03); color: white; font-size: 14px; width: 60%; min-width: 120px; outline: none;">
+                        <button onclick="applyPromo()" style="padding: 8px 16px; border-radius: 40px; border: none; background: #cc0000; color: #fff; font-weight: 600; font-size: 13px; cursor: pointer;">Применить</button>
+                    </div>
+                    <div id="promoStatus" style="color: rgba(255,255,255,0.3); font-size: 12px; margin-top: 6px; text-align: center;"></div>
                 </div>
 
-                <button class="btn-secondary" onclick="closePayment()">← Назад</button>
+                <div style="width: 100%; margin-top: 8px;">
+                    <div class="card-number">
+                        <span>💳 2203 8302 4035 5850</span>
+                        <button class="btn-copy" id="copyBtn" onclick="copyCard()">📋 Копировать</button>
+                    </div>
+                    <div style="color: rgba(255,255,255,0.2); font-size: 12px; text-align: center; margin-bottom: 6px;">МТС Банк</div>
+                </div>
+
+                <div style="width: 100%;">
+                    <div class="notice">
+                        ⚠️ <strong>ОБЯЗАТЕЛЬНО!</strong><br>
+                        После оплаты напишите <strong>@Fzzrix</strong><br>
+                        <span style="font-size: 12px; opacity: 0.6;">ИНАЧЕ ПОДПИСКА НЕ БУДЕТ ВЫДАНА!</span>
+                    </div>
+                    <button class="btn-outline" onclick="closePayment()" style="width: 100%; padding: 14px; border-radius: 60px; background: transparent; border: 1px solid rgba(255,0,0,0.08); color: rgba(255,255,255,0.5); cursor: pointer;">← Назад</button>
+                </div>
             </div>
         </div>
 
@@ -1217,72 +876,60 @@
             <button class="nav-btn" id="navSupport" onclick="switchPage('support')">
                 <span class="icon">🆘</span> Поддержка
             </button>
+            <button class="nav-btn" id="navPromo" onclick="switchPage('promo')">
+                <span class="icon">🎫</span> Промокоды
+            </button>
         </div>
 
     </div>
 
     <script>
         // =============================================
-        // SPLASH SCREEN
+        // 120 FPS РАКЕТА
         // =============================================
 
-        window.addEventListener('load', function() {
-            setTimeout(function() {
-                document.getElementById('splash').classList.add('hidden');
-            }, 1200);
-        });
+        const rocket = document.getElementById('rocket');
+        let x = 30,
+            y = 30;
+        let dx = 1.2,
+            dy = -1.0;
+        let angle = 0;
+
+        function animateRocket() {
+            const w = window.innerWidth - 120;
+            const h = window.innerHeight - 120;
+
+            x += dx;
+            y += dy;
+
+            if (x > w || x < 10) dx *= -1;
+            if (y > h || y < 10) dy *= -1;
+
+            angle += 0.3;
+            const rot = Math.atan2(dy, dx) * (180 / Math.PI);
+
+            rocket.style.transform =
+                `translate(${x}px, ${y}px) rotate(${rot}deg) scale(${1 + Math.sin(angle * 0.03) * 0.04})`;
+
+            requestAnimationFrame(animateRocket);
+        }
+
+        animateRocket();
 
         // =============================================
-        // ЗВЁЗДЫ
+        // СЧЁТЧИК
         // =============================================
 
-        (function createStars() {
-            const container = document.getElementById('stars');
-            for (let i = 0; i < 120; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-                const size = Math.random() * 2 + 1;
-                star.style.width = size + 'px';
-                star.style.height = size + 'px';
-                star.style.left = Math.random() * 100 + '%';
-                star.style.top = Math.random() * 100 + '%';
-                star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
-                star.style.animationDelay = (Math.random() * 5) + 's';
-                container.appendChild(star);
-            }
-        })();
-
-        // =============================================
-        // СЧЁТЧИК (с анимацией)
-        // =============================================
-
-        let userCount = 127;
-        const counterEl = document.getElementById('userCounter');
+        let count = 328;
+        const counterEl = document.getElementById('userCount');
 
         function updateCounter() {
-            const delta = Math.floor(Math.random() * 2) + 1;
-            userCount += delta;
-            counterEl.textContent = userCount;
+            const delta = Math.floor(Math.random() * 3) + 1;
+            count += delta;
+            counterEl.textContent = count;
         }
 
-        setInterval(updateCounter, 6000);
-        setTimeout(() => { counterEl.textContent = userCount; }, 100);
-
-        // =============================================
-        // ТОСТ
-        // =============================================
-
-        let toastTimeout;
-
-        function showToast(text) {
-            const toast = document.getElementById('toast');
-            toast.innerHTML = `<span class="icon">✅</span> ${text}`;
-            toast.classList.add('show');
-            clearTimeout(toastTimeout);
-            toastTimeout = setTimeout(() => {
-                toast.classList.remove('show');
-            }, 2000);
-        }
+        setInterval(updateCounter, 8000);
 
         // =============================================
         // ЗВУК
@@ -1316,143 +963,6 @@
         }
 
         // =============================================
-        // QR-КОД (анимированный)
-        // =============================================
-
-        function generateQR(text, containerId) {
-            const container = document.getElementById(containerId);
-            if (!container) return;
-            container.innerHTML = '';
-
-            const script = document.createElement('script');
-            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';
-            script.onload = function() {
-                new QRCode(container, {
-                    text: text,
-                    width: 120,
-                    height: 120,
-                    colorDark: '#000000',
-                    colorLight: '#ffffff',
-                    correctLevel: QRCode.CorrectLevel.H
-                });
-                // Анимация уже через CSS
-            };
-            document.head.appendChild(script);
-        }
-
-        const cardNumber = '2203830240355850';
-        setTimeout(() => generateQR(cardNumber, 'qrContainer'), 400);
-
-        // =============================================
-        // КОПИРОВАНИЕ БЕСПЛАТНОЙ ССЫЛКИ (с тостом)
-        // =============================================
-
-        function copyFreeLink() {
-            const link = 'https://tri.su/nbAGa';
-            playClick();
-
-            navigator.clipboard.writeText(link).then(() => {
-                const el = document.getElementById('freeLink');
-                el.textContent = '✅ Ссылка скопирована!';
-                el.classList.add('copied');
-                showToast('Ссылка скопирована!');
-                setTimeout(() => {
-                    el.textContent = '📋 https://tri.su/nbAGa';
-                    el.classList.remove('copied');
-                }, 2000);
-            }).catch(() => {
-                const input = document.createElement('input');
-                input.value = link;
-                document.body.appendChild(input);
-                input.select();
-                document.execCommand('copy');
-                input.remove();
-                const el = document.getElementById('freeLink');
-                el.textContent = '✅ Ссылка скопирована!';
-                el.classList.add('copied');
-                showToast('Ссылка скопирована!');
-                setTimeout(() => {
-                    el.textContent = '📋 https://tri.su/nbAGa';
-                    el.classList.remove('copied');
-                }, 2000);
-            });
-        }
-
-        // =============================================
-        // КОПИРОВАНИЕ КАРТЫ (с тостом)
-        // =============================================
-
-        function copyCard() {
-            const card = '2203830240355850';
-            playClick();
-
-            navigator.clipboard.writeText(card).then(() => {
-                const btn = document.getElementById('copyBtn');
-                btn.textContent = '✅ Готово!';
-                btn.classList.add('copied');
-                showToast('Номер карты скопирован!');
-                setTimeout(() => {
-                    btn.textContent = '📋 Копировать';
-                    btn.classList.remove('copied');
-                }, 2000);
-            }).catch(() => {
-                const input = document.createElement('input');
-                input.value = card;
-                document.body.appendChild(input);
-                input.select();
-                document.execCommand('copy');
-                input.remove();
-                const btn = document.getElementById('copyBtn');
-                btn.textContent = '✅ Готово!';
-                btn.classList.add('copied');
-                showToast('Номер карты скопирован!');
-                setTimeout(() => {
-                    btn.textContent = '📋 Копировать';
-                    btn.classList.remove('copied');
-                }, 2000);
-            });
-        }
-
-        // =============================================
-        // ПОДЕЛИТЬСЯ
-        // =============================================
-
-        function shareSite() {
-            playClick();
-            if (navigator.share) {
-                navigator.share({
-                    title: 'Fzzrix VPN',
-                    text: 'Безопасный VPN с бесплатным тарифом! 🚀',
-                    url: window.location.href
-                }).catch(() => {});
-            } else {
-                const url = window.location.href;
-                const text = 'Безопасный VPN с бесплатным тарифом! 🚀\n' + url;
-                const encoded = encodeURIComponent(text);
-                const tgLink = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encoded}`;
-                window.open(tgLink, '_blank');
-            }
-        }
-
-        // =============================================
-        // FAQ
-        // =============================================
-
-        function toggleFaq(el) {
-            const answer = el.nextElementSibling;
-            const isOpen = answer.classList.contains('open');
-
-            // Закрываем все
-            document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('open'));
-            document.querySelectorAll('.faq-question').forEach(q => q.classList.remove('active'));
-
-            if (!isOpen) {
-                answer.classList.add('open');
-                el.classList.add('active');
-            }
-        }
-
-        // =============================================
         // НАВИГАЦИЯ
         // =============================================
 
@@ -1461,6 +971,7 @@
             shop: document.getElementById('pageShop'),
             help: document.getElementById('pageHelp'),
             support: document.getElementById('pageSupport'),
+            promo: document.getElementById('pagePromo'),
         };
 
         const navBtns = {
@@ -1468,6 +979,7 @@
             shop: document.getElementById('navShop'),
             help: document.getElementById('navHelp'),
             support: document.getElementById('navSupport'),
+            promo: document.getElementById('navPromo'),
         };
 
         function switchPage(page) {
@@ -1482,25 +994,33 @@
             navBtns[page].classList.add('active');
 
             document.getElementById('payment').classList.add('hidden');
-
-            // Прокрутка наверх при смене страницы
-            document.querySelector('.cosmic-card').scrollTop = 0;
         }
 
         // =============================================
         // ОПЛАТА
         // =============================================
 
-        function showPremium(price) {
+        let currentPrice = 50;
+        let currentTitle = '1 месяц';
+        let currentDays = 30;
+        let discountApplied = false;
+
+        function showPayment(price, title, days) {
             playClick();
-            document.getElementById('payTitle').textContent = price === 50 ? '💎 Премиум' : '💎 Премиум навсегда';
+            currentPrice = price;
+            currentTitle = title;
+            currentDays = days;
+            discountApplied = false;
+            document.getElementById('payTitle').textContent = '📅 ' + title;
             document.getElementById('payPrice').textContent = price + ' ₽';
+            document.getElementById('payDays').textContent = days + ' дней доступа';
             document.getElementById('payment').classList.remove('hidden');
-            setTimeout(() => generateQR(cardNumber, 'qrContainer'), 100);
-            // Прокручиваем к оплате
+            document.getElementById('promoStatus').textContent = '';
+            document.getElementById('promoInput').value = '';
+
             setTimeout(() => {
-                document.querySelector('.cosmic-card').scrollTo({
-                    top: document.querySelector('.cosmic-card').scrollHeight,
+                document.querySelector('.glass').scrollTo({
+                    top: document.querySelector('.glass').scrollHeight,
                     behavior: 'smooth'
                 });
             }, 200);
@@ -1512,42 +1032,121 @@
         }
 
         // =============================================
-        // КНОПКА "НАВЕРХ"
+        // ПРОМОКОДЫ
         // =============================================
 
-        function scrollToTop() {
-            document.querySelector('.cosmic-card').scrollTo({
-                top: 0,
-                behavior: 'smooth'
+        function applyPromo() {
+            const input = document.getElementById('promoInput').value.trim();
+            const status = document.getElementById('promoStatus');
+
+            if (input === 'Fzzrix') {
+                if (discountApplied) {
+                    status.textContent = '✅ Промокод уже применён!';
+                    status.style.color = '#ff3333';
+                    return;
+                }
+                const newPrice = Math.round(currentPrice * 0.9);
+                document.getElementById('payPrice').textContent = newPrice + ' ₽';
+                status.textContent = '✅ Промокод Fzzrix применён! Скидка 10%';
+                status.style.color = '#ff3333';
+                discountApplied = true;
+                playClick();
+            } else {
+                status.textContent = '❌ Неверный промокод';
+                status.style.color = '#ff3333';
+                playClick();
+            }
+        }
+
+        function copyPromo() {
+            const promo = 'Fzzrix';
+            playClick();
+            navigator.clipboard.writeText(promo).then(() => {
+                const btn = document.querySelector('.promo-box .btn-copy');
+                btn.textContent = '✅ Скопировано!';
+                setTimeout(() => {
+                    btn.textContent = '📋 Скопировать промокод';
+                }, 2000);
+            }).catch(() => {
+                const input = document.createElement('input');
+                input.value = promo;
+                document.body.appendChild(input);
+                input.select();
+                document.execCommand('copy');
+                input.remove();
+                const btn = document.querySelector('.promo-box .btn-copy');
+                btn.textContent = '✅ Скопировано!';
+                setTimeout(() => {
+                    btn.textContent = '📋 Скопировать промокод';
+                }, 2000);
             });
         }
 
-        // Показываем/скрываем кнопку "Наверх"
-        const scrollCard = document.querySelector('.cosmic-card');
-        const scrollBtn = document.getElementById('scrollTop');
+        // =============================================
+        // КОПИРОВАНИЕ КАРТЫ
+        // =============================================
 
-        scrollCard.addEventListener('scroll', function() {
-            if (this.scrollTop > 200) {
-                scrollBtn.classList.add('visible');
+        function copyCard() {
+            const card = '2203830240355850';
+            playClick();
+
+            navigator.clipboard.writeText(card).then(() => {
+                const btn = document.getElementById('copyBtn');
+                btn.textContent = '✅ Готово!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.textContent = '📋 Копировать';
+                    btn.classList.remove('copied');
+                }, 2000);
+            }).catch(() => {
+                const input = document.createElement('input');
+                input.value = card;
+                document.body.appendChild(input);
+                input.select();
+                document.execCommand('copy');
+                input.remove();
+                const btn = document.getElementById('copyBtn');
+                btn.textContent = '✅ Готово!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.textContent = '📋 Копировать';
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
+        }
+
+        // =============================================
+        // ПОДЕЛИТЬСЯ
+        // =============================================
+
+        function shareSite() {
+            playClick();
+            const url = window.location.href;
+            const text = '⚡ МОЛНИЯ VPN — быстрый и безопасный интернет!\nПереходи по ссылке:';
+            const encoded = encodeURIComponent(text + '\n' + url);
+
+            if (navigator.share) {
+                navigator.share({
+                    title: 'МОЛНИЯ VPN',
+                    text: text + '\n' + url,
+                    url: url
+                }).catch(() => {});
             } else {
-                scrollBtn.classList.remove('visible');
+                window.open(`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encoded}`, '_blank');
             }
-        });
+        }
 
         // =============================================
         // ЗВУК НА ВСЕ КНОПКИ
         // =============================================
 
         document.addEventListener('click', function(e) {
-            if (e.target.closest('.btn-primary') ||
-                e.target.closest('.btn-secondary') ||
+            if (e.target.closest('.plan-btn') ||
                 e.target.closest('.nav-btn') ||
-                e.target.closest('.copy-btn') ||
-                e.target.closest('.copy-link') ||
-                e.target.closest('.btn-share') ||
-                e.target.closest('.faq-question') ||
-                e.target.closest('.scroll-top')) {
-                // Звук уже играется в функциях, но если вдруг нет — добавим
+                e.target.closest('.btn-copy') ||
+                e.target.closest('.btn-ghost') ||
+                e.target.closest('.btn-outline')) {
+                // Звук уже играется в функциях
             }
         });
     </script>
