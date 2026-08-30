@@ -243,25 +243,6 @@
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
         }
 
-        .btn-gold {
-            background: #cc0000;
-            box-shadow: 0 8px 24px rgba(204, 0, 0, 0.2);
-        }
-        .btn-gold:hover {
-            box-shadow: 0 14px 36px rgba(204, 0, 0, 0.35);
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 1.5px solid rgba(255, 0, 0, 0.12);
-            color: rgba(255, 255, 255, 0.6);
-            box-shadow: none;
-        }
-        .btn-outline:hover {
-            background: rgba(255, 0, 0, 0.04);
-            border-color: rgba(255, 0, 0, 0.2);
-        }
-
         .btn-copy {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 0, 0, 0.06);
@@ -270,6 +251,8 @@
             font-size: 14px;
             padding: 10px;
             margin-top: 4px;
+            border-radius: 40px;
+            cursor: pointer;
         }
 
         .btn-copy:hover {
@@ -281,6 +264,18 @@
             color: #ff0000;
         }
 
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid rgba(255, 0, 0, 0.12);
+            color: rgba(255, 255, 255, 0.6);
+            box-shadow: none;
+            cursor: pointer;
+        }
+        .btn-outline:hover {
+            background: rgba(255, 0, 0, 0.04);
+            border-color: rgba(255, 0, 0, 0.2);
+        }
+
         /* ===== ПЛАНЫ ===== */
         .plan {
             background: rgba(255, 255, 255, 0.02);
@@ -290,8 +285,6 @@
             margin: 8px 0;
             border: 1px solid rgba(255, 0, 0, 0.04);
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            opacity: 1;
-            transform: translateY(0);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -332,10 +325,6 @@
             color: #ff3333;
         }
 
-        .plan-price-gold {
-            color: #ff4444;
-        }
-
         .plan-btn {
             padding: 6px 16px;
             border: none;
@@ -347,15 +336,10 @@
             cursor: pointer;
             transition: all 0.2s;
             margin-top: 4px;
-            width: auto;
         }
 
         .plan-btn:hover {
             transform: scale(1.05);
-        }
-
-        .plan-btn-gold {
-            background: #cc0000;
         }
 
         /* ===== ПРОМОКОДЫ ===== */
@@ -454,10 +438,6 @@
             border-radius: 16px;
             margin: 6px 0;
             border-left: 2px solid #cc0000;
-        }
-
-        .step-done {
-            border-left-color: #cc0000;
         }
 
         .instruction a {
@@ -569,8 +549,9 @@
             display: none !important;
         }
 
-        .mt-2 {
-            margin-top: 12px;
+        /* ===== СЕКРЕТНЫЙ ТАРИФ ===== */
+        .secret-tariff {
+            display: none;
         }
 
         /* ===== АДАПТИВ ===== */
@@ -689,58 +670,41 @@
         <div class="page hidden" id="pageShop">
             <div class="subhead" style="margin-bottom: 8px; font-size: 13px; text-align: center;">Выбери свой тариф:</div>
 
-            <div class="plan fade-up">
+            <!-- БЕСПЛАТНЫЙ ТАРИФ -->
+            <div class="plan">
                 <div class="plan-left">
-                    <span class="plan-title">📅 1 месяц</span>
-                    <span class="plan-desc">Доступ на 30 дней</span>
+                    <span class="plan-title">🎉 Бесплатный</span>
+                    <span class="plan-desc">Базовый доступ</span>
                 </div>
                 <div class="plan-right">
-                    <span class="plan-price">50 ₽</span>
-                    <button class="plan-btn" onclick="showPayment(50, '1 месяц', 30)">Выбрать</button>
+                    <span class="plan-price">0 ₽</span>
+                    <button class="plan-btn" onclick="showFree()">Получить</button>
                 </div>
             </div>
 
-            <div class="plan fade-up" style="animation-delay: 0.04s;">
+            <!-- ПЛАТНЫЙ ТАРИФ 67 PRO -->
+            <div class="plan" style="border-color: rgba(255, 0, 0, 0.15);">
                 <div class="plan-left">
-                    <span class="plan-title">📅 2 месяца</span>
-                    <span class="plan-desc">Доступ на 60 дней</span>
+                    <span class="plan-title">💎 67 Pro</span>
+                    <span class="plan-desc">Максимальная скорость</span>
                 </div>
                 <div class="plan-right">
-                    <span class="plan-price">100 ₽</span>
-                    <button class="plan-btn" onclick="showPayment(100, '2 месяца', 60)">Выбрать</button>
+                    <span class="plan-price">67 ₽</span>
+                    <button class="plan-btn" onclick="showPayment(67, '67 Pro', 30)">Выбрать</button>
                 </div>
             </div>
 
-            <div class="plan fade-up" style="animation-delay: 0.08s;">
-                <div class="plan-left">
-                    <span class="plan-title">📅 3 месяца</span>
-                    <span class="plan-desc">Доступ на 90 дней</span>
-                </div>
-                <div class="plan-right">
-                    <span class="plan-price">150 ₽</span>
-                    <button class="plan-btn" onclick="showPayment(150, '3 месяца', 90)">Выбрать</button>
-                </div>
-            </div>
-
-            <div class="plan fade-up" style="animation-delay: 0.12s;">
-                <div class="plan-left">
-                    <span class="plan-title">📅 4 месяца</span>
-                    <span class="plan-desc">Доступ на 120 дней</span>
-                </div>
-                <div class="plan-right">
-                    <span class="plan-price">200 ₽</span>
-                    <button class="plan-btn" onclick="showPayment(200, '4 месяца', 120)">Выбрать</button>
-                </div>
-            </div>
-
-            <div class="plan fade-up" style="animation-delay: 0.16s; border-color: rgba(255, 0, 0, 0.15);">
-                <div class="plan-left">
-                    <span class="plan-title">⭐ 5 месяцев</span>
-                    <span class="plan-desc">Доступ на 150 дней</span>
-                </div>
-                <div class="plan-right">
-                    <span class="plan-price plan-price-gold">250 ₽</span>
-                    <button class="plan-btn plan-btn-gold" onclick="showPayment(250, '5 месяцев', 150)">Выбрать</button>
+            <!-- СЕКРЕТНЫЙ ТАРИФ ЗА 25₽ (СПРЯТАН) -->
+            <div class="secret-tariff" id="secretTariff">
+                <div class="plan" style="border-color: rgba(255, 0, 0, 0.15);">
+                    <div class="plan-left">
+                        <span class="plan-title">🔒 Секретный</span>
+                        <span class="plan-desc">Особый доступ</span>
+                    </div>
+                    <div class="plan-right">
+                        <span class="plan-price">25 ₽</span>
+                        <button class="plan-btn" onclick="showPayment(25, 'Секретный', 30)">Выбрать</button>
+                    </div>
                 </div>
             </div>
 
@@ -765,7 +729,7 @@
                 <div class="step"><strong>3.</strong> Выбери <strong>«Вставить из буфера обмена»</strong></div>
                 <div class="step"><strong>4.</strong> Вставь ссылку, которую получишь после оплаты у <strong>@Fzzrix</strong></div>
                 <div class="step"><strong>5.</strong> Выбери сервер (Польша или Финляндия)</div>
-                <div class="step step-done"><strong>✅ Готово!</strong> Ты подключён 🎉</div>
+                <div class="step"><strong>✅ Готово!</strong> Ты подключён 🎉</div>
             </div>
 
             <button class="btn-ghost" onclick="shareSite()" style="margin-top: 12px; width: 100%; padding: 12px; border-radius: 60px; border: 1px solid rgba(255,0,0,0.06); background: rgba(255,0,0,0.02); color: rgba(255,255,255,0.5); cursor: pointer; font-size: 14px;">
@@ -787,36 +751,9 @@
                     либо не получается добавить подписку —<br>
                     пишите нам в поддержку!
                 </div>
-                <a href="https://t.me/Fzzrix_VPN_Support" target="_blank" class="support-contact">
+                <a href="https://t.me/Fzzrix" target="_blank" class="support-contact">
                     📩 Написать в поддержку
                 </a>
-            </div>
-
-            <button class="btn-ghost" onclick="shareSite()" style="margin-top: 12px; width: 100%; padding: 12px; border-radius: 60px; border: 1px solid rgba(255,0,0,0.06); background: rgba(255,0,0,0.02); color: rgba(255,255,255,0.5); cursor: pointer; font-size: 14px;">
-                📤 Поделиться с друзьями
-            </button>
-        </div>
-
-        <!-- ===== СТРАНИЦА: ПРОМОКОДЫ ===== -->
-        <div class="page hidden" id="pagePromo">
-            <div class="headline" style="font-size: 22px; margin-bottom: 12px;">
-                🎫 <span style="color: rgba(255,255,255,0.5); font-weight: 400;">Промокоды</span>
-            </div>
-
-            <div class="promo-box">
-                <div style="font-size: 14px; color: rgba(255,255,255,0.3); margin-bottom: 6px;">Активный промокод</div>
-                <div class="promo-code" id="promoCodeDisplay">Fzzrix</div>
-                <div class="promo-desc">Скидка 10% на любой тариф</div>
-                <button class="btn-copy" onclick="copyPromo()" style="margin-top: 12px; width: auto; display: inline-block; padding: 8px 24px; border-radius: 40px; background: rgba(255,0,0,0.04); border: 1px solid rgba(255,0,0,0.08); color: #ff3333; cursor: pointer; font-size: 13px; font-weight: 600;">
-                    📋 Скопировать промокод
-                </button>
-            </div>
-
-            <div style="margin-top: 16px; padding: 16px; background: rgba(255,255,255,0.02); border-radius: 20px; border: 1px solid rgba(255,0,0,0.03);">
-                <div style="color: rgba(255,255,255,0.3); font-size: 13px; text-align: center; line-height: 1.6;">
-                    💡 Введи промокод при оплате<br>
-                    и получи скидку 10% на любой тариф
-                </div>
             </div>
 
             <button class="btn-ghost" onclick="shareSite()" style="margin-top: 12px; width: 100%; padding: 12px; border-radius: 60px; border: 1px solid rgba(255,0,0,0.06); background: rgba(255,0,0,0.02); color: rgba(255,255,255,0.5); cursor: pointer; font-size: 14px;">
@@ -829,32 +766,22 @@
             <div class="plan" style="border-color: rgba(255, 0, 0, 0.15); flex-wrap: wrap; justify-content: center; text-align: center;">
                 <div style="width: 100%;">
                     <span style="color: rgba(255,255,255,0.4); font-size: 13px;">Вы выбрали</span>
-                    <div style="color: white; font-weight: 600; font-size: 18px;" id="payTitle">📅 1 месяц</div>
-                    <div style="font-size: 28px; font-weight: 700; color: #ff3333; margin: 4px 0;" id="payPrice">50 ₽</div>
+                    <div style="color: white; font-weight: 600; font-size: 18px;" id="payTitle">💎 67 Pro</div>
+                    <div style="font-size: 28px; font-weight: 700; color: #ff3333; margin: 4px 0;" id="payPrice">67 ₽</div>
                     <div style="color: rgba(255,255,255,0.3); font-size: 13px;" id="payDays">30 дней доступа</div>
-                </div>
-
-                <!-- ПРОМОКОД -->
-                <div style="width: 100%; margin-top: 8px; padding: 10px; background: rgba(255,0,0,0.03); border-radius: 16px; border: 1px solid rgba(255,0,0,0.06);">
-                    <div style="display: flex; gap: 8px; align-items: center; justify-content: center; flex-wrap: wrap;">
-                        <input type="text" id="promoInput" placeholder="Введи промокод" style="padding: 8px 14px; border-radius: 40px; border: 1px solid rgba(255,255,255,0.06); background: rgba(255,255,255,0.03); color: white; font-size: 14px; width: 60%; min-width: 120px; outline: none;">
-                        <button onclick="applyPromo()" style="padding: 8px 16px; border-radius: 40px; border: none; background: #cc0000; color: #fff; font-weight: 600; font-size: 13px; cursor: pointer;">Применить</button>
-                    </div>
-                    <div id="promoStatus" style="color: rgba(255,255,255,0.3); font-size: 12px; margin-top: 6px; text-align: center;"></div>
                 </div>
 
                 <div style="width: 100%; margin-top: 8px;">
                     <div class="card-number">
-                        <span>💳 2203 8302 4035 5850</span>
+                        <span>💳 2203 8302 5298 4647</span>
                         <button class="btn-copy" id="copyBtn" onclick="copyCard()">📋 Копировать</button>
                     </div>
-                    <div style="color: rgba(255,255,255,0.2); font-size: 12px; text-align: center; margin-bottom: 6px;">МТС Банк</div>
+                    <div style="color: rgba(255,255,255,0.2); font-size: 12px; text-align: center; margin-bottom: 6px;">МТС Деньги</div>
                 </div>
 
                 <div style="width: 100%;">
                     <div class="notice">
-                        ⚠️ <strong>ОБЯЗАТЕЛЬНО!</strong><br>
-                        После оплаты напишите <strong>@Fzzrix</strong><br>
+                        ⚠️ <strong>ПЕРЕД ПЕРЕВОДОМ ОБЯЗАТЕЛЬНО НАПИШИТЕ @Fzzrix</strong><br>
                         <span style="font-size: 12px; opacity: 0.6;">ИНАЧЕ ПОДПИСКА НЕ БУДЕТ ВЫДАНА!</span>
                     </div>
                     <button class="btn-outline" onclick="closePayment()" style="width: 100%; padding: 14px; border-radius: 60px; background: transparent; border: 1px solid rgba(255,0,0,0.08); color: rgba(255,255,255,0.5); cursor: pointer;">← Назад</button>
@@ -876,16 +803,13 @@
             <button class="nav-btn" id="navSupport" onclick="switchPage('support')">
                 <span class="icon">🆘</span> Поддержка
             </button>
-            <button class="nav-btn" id="navPromo" onclick="switchPage('promo')">
-                <span class="icon">🎫</span> Промокоды
-            </button>
         </div>
 
     </div>
 
     <script>
         // =============================================
-        // 120 FPS РАКЕТА
+        // РАКЕТА
         // =============================================
 
         const rocket = document.getElementById('rocket');
@@ -948,17 +872,6 @@
                 gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.1);
                 osc.start(ctx.currentTime);
                 osc.stop(ctx.currentTime + 0.1);
-
-                const osc2 = ctx.createOscillator();
-                const gain2 = ctx.createGain();
-                osc2.connect(gain2);
-                gain2.connect(ctx.destination);
-                osc2.frequency.value = 900;
-                osc2.type = 'sine';
-                gain2.gain.setValueAtTime(0.025, ctx.currentTime);
-                gain2.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
-                osc2.start(ctx.currentTime + 0.02);
-                osc2.stop(ctx.currentTime + 0.1);
             } catch (e) { /* тихо */ }
         }
 
@@ -971,7 +884,6 @@
             shop: document.getElementById('pageShop'),
             help: document.getElementById('pageHelp'),
             support: document.getElementById('pageSupport'),
-            promo: document.getElementById('pagePromo'),
         };
 
         const navBtns = {
@@ -979,7 +891,6 @@
             shop: document.getElementById('navShop'),
             help: document.getElementById('navHelp'),
             support: document.getElementById('navSupport'),
-            promo: document.getElementById('navPromo'),
         };
 
         function switchPage(page) {
@@ -997,26 +908,39 @@
         }
 
         // =============================================
+        // БЕСПЛАТНЫЙ ТАРИФ
+        // =============================================
+
+        function showFree() {
+            playClick();
+            const vpnLink = 'https://tri.su/MlOdp';
+            
+            const freeText = 
+                '🎉 **Бесплатный тариф**\n\n' +
+                '🔗 Твоя ссылка на VPN:\n' + vpnLink + '\n\n' +
+                '📲 Как подключить:\n' +
+                '1. Скачай Happ Proxy Utility\n' +
+                '2. Нажми «➕ Добавить подписку»\n' +
+                '3. Выбери «Вставить из буфера обмена»\n' +
+                '4. Выбери сервер\n' +
+                '5. Готово!';
+            
+            alert(freeText.replace(/\*\*/g, ''));
+            
+            // Копируем ссылку
+            navigator.clipboard.writeText(vpnLink).catch(() => {});
+        }
+
+        // =============================================
         // ОПЛАТА
         // =============================================
 
-        let currentPrice = 50;
-        let currentTitle = '1 месяц';
-        let currentDays = 30;
-        let discountApplied = false;
-
         function showPayment(price, title, days) {
             playClick();
-            currentPrice = price;
-            currentTitle = title;
-            currentDays = days;
-            discountApplied = false;
-            document.getElementById('payTitle').textContent = '📅 ' + title;
+            document.getElementById('payTitle').textContent = '💎 ' + title;
             document.getElementById('payPrice').textContent = price + ' ₽';
             document.getElementById('payDays').textContent = days + ' дней доступа';
             document.getElementById('payment').classList.remove('hidden');
-            document.getElementById('promoStatus').textContent = '';
-            document.getElementById('promoInput').value = '';
 
             setTimeout(() => {
                 document.querySelector('.glass').scrollTo({
@@ -1032,62 +956,11 @@
         }
 
         // =============================================
-        // ПРОМОКОДЫ
-        // =============================================
-
-        function applyPromo() {
-            const input = document.getElementById('promoInput').value.trim();
-            const status = document.getElementById('promoStatus');
-
-            if (input === 'Fzzrix') {
-                if (discountApplied) {
-                    status.textContent = '✅ Промокод уже применён!';
-                    status.style.color = '#ff3333';
-                    return;
-                }
-                const newPrice = Math.round(currentPrice * 0.9);
-                document.getElementById('payPrice').textContent = newPrice + ' ₽';
-                status.textContent = '✅ Промокод Fzzrix применён! Скидка 10%';
-                status.style.color = '#ff3333';
-                discountApplied = true;
-                playClick();
-            } else {
-                status.textContent = '❌ Неверный промокод';
-                status.style.color = '#ff3333';
-                playClick();
-            }
-        }
-
-        function copyPromo() {
-            const promo = 'Fzzrix';
-            playClick();
-            navigator.clipboard.writeText(promo).then(() => {
-                const btn = document.querySelector('.promo-box .btn-copy');
-                btn.textContent = '✅ Скопировано!';
-                setTimeout(() => {
-                    btn.textContent = '📋 Скопировать промокод';
-                }, 2000);
-            }).catch(() => {
-                const input = document.createElement('input');
-                input.value = promo;
-                document.body.appendChild(input);
-                input.select();
-                document.execCommand('copy');
-                input.remove();
-                const btn = document.querySelector('.promo-box .btn-copy');
-                btn.textContent = '✅ Скопировано!';
-                setTimeout(() => {
-                    btn.textContent = '📋 Скопировать промокод';
-                }, 2000);
-            });
-        }
-
-        // =============================================
         // КОПИРОВАНИЕ КАРТЫ
         // =============================================
 
         function copyCard() {
-            const card = '2203830240355850';
+            const card = '2203830252984647';
             playClick();
 
             navigator.clipboard.writeText(card).then(() => {
@@ -1137,18 +1010,25 @@
         }
 
         // =============================================
-        // ЗВУК НА ВСЕ КНОПКИ
+        // СЕКРЕТНЫЙ ТАРИФ (СПРЯТАН)
         // =============================================
 
-        document.addEventListener('click', function(e) {
-            if (e.target.closest('.plan-btn') ||
-                e.target.closest('.nav-btn') ||
-                e.target.closest('.btn-copy') ||
-                e.target.closest('.btn-ghost') ||
-                e.target.closest('.btn-outline')) {
-                // Звук уже играется в функциях
+        // Чтобы открыть секретный тариф за 25₽:
+        // 1. Нажми 5 раз на счётчик "Сейчас с нами"
+        // 2. Или введи в консоли: showSecretTariff()
+
+        let secretClicks = 0;
+        document.querySelector('.counter').addEventListener('click', function() {
+            secretClicks++;
+            if (secretClicks >= 5) {
+                document.getElementById('secretTariff').style.display = 'block';
+                secretClicks = 0;
             }
         });
+
+        function showSecretTariff() {
+            document.getElementById('secretTariff').style.display = 'block';
+        }
     </script>
 
 </body>
