@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>МОЛНИЯ VPN</title>
     <style>
+        /* ===== ИМПОРТ ШРИФТОВ ===== */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
         /* ===== ГЛОБАЛЬНО ===== */
         * {
             margin: 0;
@@ -12,16 +15,113 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --primary-light: #818cf8;
+            --accent: #a855f7;
+            --bg-start: #0f172a;
+            --bg-end: #1e293b;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --gradient: linear-gradient(135deg, #6366f1, #a855f7, #ec4899);
+            --shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+        }
+
         body {
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
             min-height: 100vh;
-            background: #0a0a0a;
+            background: linear-gradient(135deg, var(--bg-start) 0%, #1a1a2e 50%, var(--bg-end) 100%);
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 16px;
             overflow: hidden;
             position: relative;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ===== АНИМИРОВАННЫЙ ФОН ===== */
+        .aurora-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .aurora {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: auroraFloat 20s ease-in-out infinite;
+            will-change: transform, opacity;
+        }
+
+        .aurora-1 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, #6366f1, transparent 70%);
+            top: -200px;
+            left: -200px;
+            animation-delay: 0s;
+        }
+
+        .aurora-2 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #a855f7, transparent 70%);
+            bottom: -150px;
+            right: -150px;
+            animation-delay: -7s;
+        }
+
+        .aurora-3 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, #ec4899, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: -14s;
+        }
+
+        @keyframes auroraFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.4; }
+            25% { transform: translate(100px, -100px) scale(1.2); opacity: 0.6; }
+            50% { transform: translate(-50px, 50px) scale(0.9); opacity: 0.5; }
+            75% { transform: translate(50px, 100px) scale(1.1); opacity: 0.3; }
+        }
+
+        /* ===== ЧАСТИЦЫ ===== */
+        .particles {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: particleFloat 10s linear infinite;
+            will-change: transform, opacity;
+        }
+
+        @keyframes particleFloat {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) rotate(720deg); opacity: 0; }
         }
 
         /* ===== ЖИДКОЕ СТЕКЛО ===== */
@@ -41,14 +141,15 @@
             width: 200%;
             height: 200%;
             background: conic-gradient(from 0deg, 
-                rgba(255, 0, 0, 0.05), 
-                rgba(200, 0, 0, 0.05), 
-                rgba(255, 0, 0, 0.05), 
-                rgba(100, 0, 0, 0.05),
-                rgba(255, 0, 0, 0.05)
+                rgba(99, 102, 241, 0.1), 
+                rgba(168, 85, 247, 0.08), 
+                rgba(236, 72, 153, 0.1), 
+                rgba(99, 102, 241, 0.08),
+                rgba(168, 85, 247, 0.1)
             );
-            animation: liquidGlass 12s linear infinite;
+            animation: liquidGlass 15s linear infinite;
             filter: blur(60px);
+            will-change: transform;
         }
 
         .glass-bg::after {
@@ -58,10 +159,11 @@
             left: -30%;
             width: 160%;
             height: 160%;
-            background: radial-gradient(ellipse at 30% 40%, rgba(255, 0, 0, 0.04), transparent 50%),
-                         radial-gradient(ellipse at 70% 60%, rgba(200, 0, 0, 0.04), transparent 50%);
-            animation: pulseGlass 6s ease-in-out infinite;
+            background: radial-gradient(ellipse at 30% 40%, rgba(99, 102, 241, 0.08), transparent 50%),
+                         radial-gradient(ellipse at 70% 60%, rgba(236, 72, 153, 0.08), transparent 50%);
+            animation: pulseGlass 8s ease-in-out infinite;
             filter: blur(60px);
+            will-change: transform, opacity;
         }
 
         @keyframes liquidGlass {
@@ -71,7 +173,7 @@
 
         @keyframes pulseGlass {
             0% { opacity: 0.5; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.1); }
+            50% { opacity: 1; transform: scale(1.15); }
             100% { opacity: 0.5; transform: scale(1); }
         }
 
@@ -87,8 +189,9 @@
         .rocket {
             position: absolute;
             font-size: 72px;
-            filter: drop-shadow(0 0 40px rgba(255, 0, 0, 0.2));
+            filter: drop-shadow(0 0 40px rgba(99, 102, 241, 0.5));
             will-change: transform;
+            animation: rocketFloat 4s ease-in-out infinite;
         }
 
         .rocket-fire {
@@ -97,36 +200,50 @@
             left: 50%;
             transform: translateX(-50%);
             font-size: 36px;
-            animation: firePulse 0.12s infinite alternate ease-in-out;
+            animation: firePulse 0.15s infinite alternate ease-in-out;
         }
 
         @keyframes firePulse {
             0% { transform: translateX(-50%) scale(0.6) rotate(2deg); opacity: 0.5; }
-            100% { transform: translateX(-50%) scale(1.2) rotate(-2deg); opacity: 1; }
+            100% { transform: translateX(-50%) scale(1.3) rotate(-2deg); opacity: 1; }
+        }
+
+        @keyframes rocketFloat {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-30px) rotate(5deg); }
         }
 
         /* ===== КАРТОЧКА ===== */
-        .glass {
+        .glass-card {
             max-width: 420px;
             width: 100%;
             max-height: 94vh;
             overflow-y: auto;
             padding: 28px 22px;
-            background: rgba(10, 10, 10, 0.6);
-            backdrop-filter: blur(24px) saturate(1.4);
-            -webkit-backdrop-filter: blur(24px) saturate(1.4);
-            border-radius: 48px;
-            border: 1px solid rgba(255, 0, 0, 0.08);
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 0, 0, 0.03);
+            background: var(--glass-bg);
+            backdrop-filter: blur(30px) saturate(1.6);
+            -webkit-backdrop-filter: blur(30px) saturate(1.6);
+            border-radius: 40px;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.1);
             position: relative;
             z-index: 2;
+            will-change: transform;
+            transition: transform 0.3s ease;
         }
 
-        .glass::-webkit-scrollbar {
-            width: 3px;
+        .glass-card:hover {
+            transform: translateY(-5px);
         }
-        .glass::-webkit-scrollbar-thumb {
-            background: #ff0000;
+
+        .glass-card::-webkit-scrollbar {
+            width: 4px;
+        }
+        .glass-card::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .glass-card::-webkit-scrollbar-thumb {
+            background: var(--gradient);
             border-radius: 20px;
         }
 
@@ -134,30 +251,38 @@
         .eyebrow {
             font-size: 12px;
             text-transform: uppercase;
-            letter-spacing: 3px;
-            color: #ff3333;
-            font-weight: 600;
+            letter-spacing: 4px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+            text-align: center;
         }
 
         .headline {
-            font-size: 30px;
-            font-weight: 700;
-            color: #fff;
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--text-primary);
             line-height: 1.2;
-            margin: 6px 0 4px;
+            margin: 8px 0;
+            text-align: center;
+            letter-spacing: -0.5px;
         }
 
         .headline span {
-            background: linear-gradient(135deg, #ff0000, #cc0000);
+            background: var(--gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .subhead {
-            color: rgba(255, 255, 255, 0.5);
+            color: var(--text-secondary);
             font-size: 15px;
             margin-bottom: 20px;
             font-weight: 400;
+            text-align: center;
         }
 
         /* ===== СЧЁТЧИК ===== */
@@ -165,23 +290,30 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            background: rgba(255, 0, 0, 0.04);
-            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px 20px;
             border-radius: 60px;
-            margin-bottom: 18px;
-            border: 1px solid rgba(255, 0, 0, 0.06);
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             width: fit-content;
             margin-left: auto;
             margin-right: auto;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .counter:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: scale(1.05);
         }
 
         .counter-dot {
             width: 8px;
             height: 8px;
-            background: #ff0000;
+            background: var(--gradient);
             border-radius: 50%;
-            animation: pulseDot 1.8s infinite;
-            box-shadow: 0 0 12px rgba(255, 0, 0, 0.2);
+            animation: pulseDot 2s infinite;
+            box-shadow: 0 0 12px rgba(99, 102, 241, 0.6);
         }
 
         @keyframes pulseDot {
@@ -190,15 +322,19 @@
         }
 
         .counter-text {
-            color: rgba(255, 255, 255, 0.6);
+            color: var(--text-secondary);
             font-size: 13px;
             font-weight: 400;
         }
 
         .counter-number {
-            color: #fff;
-            font-weight: 600;
-            font-size: 15px;
+            color: var(--text-primary);
+            font-weight: 700;
+            font-size: 16px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         /* ===== КНОПКИ ===== */
@@ -211,19 +347,35 @@
             font-size: 16px;
             font-weight: 600;
             color: #fff;
-            background: #cc0000;
+            background: var(--gradient);
             cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             margin: 6px 0;
-            box-shadow: 0 8px 24px rgba(204, 0, 0, 0.2);
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.3);
             letter-spacing: 0.3px;
             position: relative;
             overflow: hidden;
+            will-change: transform;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
         }
 
         .btn:hover {
             transform: scale(1.02) translateY(-3px);
-            box-shadow: 0 14px 36px rgba(204, 0, 0, 0.35);
+            box-shadow: 0 14px 36px rgba(99, 102, 241, 0.4);
         }
 
         .btn:active {
@@ -231,69 +383,91 @@
         }
 
         .btn-ghost {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 0, 0, 0.06);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: none;
-            color: rgba(255, 255, 255, 0.6);
+            color: var(--text-secondary);
         }
 
         .btn-ghost:hover {
-            background: rgba(255, 0, 0, 0.04);
+            background: rgba(255, 255, 255, 0.1);
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
         }
 
         .btn-copy {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 0, 0, 0.06);
-            color: rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
             box-shadow: none;
             font-size: 14px;
             padding: 10px;
             margin-top: 4px;
             border-radius: 40px;
             cursor: pointer;
+            transition: all 0.3s;
         }
 
         .btn-copy:hover {
-            background: rgba(255, 0, 0, 0.04);
+            background: rgba(255, 255, 255, 0.1);
         }
 
         .btn-copy.copied {
-            border-color: #ff0000;
-            color: #ff0000;
+            border-color: #6366f1;
+            color: #6366f1;
+            background: rgba(99, 102, 241, 0.1);
         }
 
         .btn-outline {
             background: transparent;
-            border: 1.5px solid rgba(255, 0, 0, 0.12);
-            color: rgba(255, 255, 255, 0.6);
+            border: 1.5px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
             box-shadow: none;
             cursor: pointer;
         }
         .btn-outline:hover {
-            background: rgba(255, 0, 0, 0.04);
-            border-color: rgba(255, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.2);
         }
 
         /* ===== ПЛАНЫ ===== */
         .plan {
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(4px);
-            border-radius: 28px;
-            padding: 16px 18px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 18px;
             margin: 8px 0;
-            border: 1px solid rgba(255, 0, 0, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            will-change: transform;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .plan::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--gradient);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .plan:hover::before {
+            opacity: 1;
         }
 
         .plan:hover {
-            border-color: rgba(255, 0, 0, 0.15);
-            background: rgba(255, 0, 0, 0.03);
+            border-color: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.05);
             transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
 
         .plan-left {
@@ -303,13 +477,13 @@
         }
 
         .plan-title {
-            color: #fff;
+            color: var(--text-primary);
             font-size: 16px;
             font-weight: 600;
         }
 
         .plan-desc {
-            color: rgba(255, 255, 255, 0.35);
+            color: var(--text-muted);
             font-size: 12px;
         }
 
@@ -320,145 +494,88 @@
         }
 
         .plan-price {
-            font-size: 20px;
+            font-size: 22px;
             font-weight: 700;
-            color: #ff3333;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .plan-btn {
-            padding: 6px 16px;
+            padding: 8px 18px;
             border: none;
             border-radius: 40px;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 600;
             color: #fff;
-            background: #cc0000;
+            background: var(--gradient);
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.3s;
             margin-top: 4px;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
         }
 
         .plan-btn:hover {
             transform: scale(1.05);
-        }
-
-        /* ===== ПРОМОКОДЫ ===== */
-        .promo-box {
-            background: rgba(255, 0, 0, 0.04);
-            border: 1px solid rgba(255, 0, 0, 0.08);
-            border-radius: 28px;
-            padding: 20px;
-            margin: 10px 0;
-            text-align: center;
-        }
-
-        .promo-code {
-            display: inline-block;
-            background: rgba(255, 0, 0, 0.06);
-            padding: 6px 18px;
-            border-radius: 40px;
-            font-family: 'SF Mono', monospace;
-            font-size: 20px;
-            font-weight: 700;
-            color: #ff3333;
-            letter-spacing: 2px;
-            border: 1px dashed rgba(255, 0, 0, 0.15);
-        }
-
-        .promo-desc {
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 13px;
-            margin-top: 8px;
-        }
-
-        /* ===== НАВИГАЦИЯ ===== */
-        .nav {
-            display: flex;
-            gap: 3px;
-            margin-top: 20px;
-            padding-top: 16px;
-            border-top: 1px solid rgba(255, 0, 0, 0.04);
-        }
-
-        .nav-btn {
-            flex: 1;
-            padding: 6px 0;
-            border: none;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.02);
-            color: rgba(255, 255, 255, 0.3);
-            font-size: 10px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-align: center;
-            line-height: 1.2;
-        }
-
-        .nav-btn:hover {
-            background: rgba(255, 0, 0, 0.04);
-            color: rgba(255, 255, 255, 0.6);
-        }
-
-        .nav-btn.active {
-            background: rgba(255, 0, 0, 0.06);
-            color: #ff3333;
-        }
-
-        .nav-btn .icon {
-            display: block;
-            font-size: 14px;
-            margin-bottom: 1px;
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
         }
 
         /* ===== ИНСТРУКЦИЯ ===== */
         .instruction {
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(4px);
-            border-radius: 28px;
-            padding: 18px 20px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 20px;
             margin-top: 14px;
-            border: 1px solid rgba(255, 0, 0, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             text-align: left;
-            color: rgba(255, 255, 255, 0.75);
+            color: var(--text-secondary);
             font-size: 14px;
             line-height: 1.7;
         }
 
         .instruction h3 {
-            color: #fff;
+            color: var(--text-primary);
             font-size: 17px;
             text-align: center;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         .step {
-            background: rgba(255, 0, 0, 0.03);
-            padding: 8px 14px;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 10px 14px;
             border-radius: 16px;
             margin: 6px 0;
-            border-left: 2px solid #cc0000;
+            border-left: 3px solid #6366f1;
+            transition: all 0.3s;
+        }
+
+        .step:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateX(5px);
         }
 
         .instruction a {
-            color: #ff3333;
+            color: #818cf8;
             text-decoration: none;
             font-weight: 500;
+            transition: color 0.3s;
         }
         .instruction a:hover {
-            text-decoration: underline;
+            color: #a855f7;
         }
 
         /* ===== ОПЛАТА ===== */
         .card-number {
-            background: rgba(255, 255, 255, 0.03);
-            padding: 12px;
-            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 14px;
+            border-radius: 16px;
             font-family: 'SF Mono', monospace;
-            font-size: 18px;
-            letter-spacing: 2.5px;
-            border: 1px dashed rgba(255, 0, 0, 0.15);
-            color: #ff3333;
+            font-size: 17px;
+            letter-spacing: 2px;
+            border: 1px dashed rgba(255, 255, 255, 0.2);
+            color: #818cf8;
             font-weight: 600;
             margin: 8px 0;
             display: flex;
@@ -469,44 +586,62 @@
         }
 
         .notice {
-            background: rgba(255, 0, 0, 0.04);
-            padding: 12px;
-            border-radius: 18px;
-            border: 1px solid rgba(255, 0, 0, 0.06);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 14px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             margin: 10px 0;
-            color: rgba(255, 255, 255, 0.7);
+            color: var(--text-secondary);
             font-size: 13px;
         }
 
         .notice strong {
-            color: #ff0000;
+            color: #a855f7;
         }
 
         /* ===== ПОДДЕРЖКА ===== */
         .support-box {
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 28px;
-            padding: 24px 20px;
-            border: 1px solid rgba(255, 0, 0, 0.03);
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 24px;
+            padding: 28px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
             text-align: center;
             margin: 10px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .support-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--gradient);
         }
 
         .support-box .support-icon {
             font-size: 48px;
             margin-bottom: 12px;
             display: block;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
         .support-box .support-title {
-            color: white;
+            color: var(--text-primary);
             font-size: 18px;
             font-weight: 600;
             margin-bottom: 8px;
         }
 
         .support-box .support-desc {
-            color: rgba(255, 255, 255, 0.5);
+            color: var(--text-secondary);
             font-size: 14px;
             line-height: 1.6;
             margin-bottom: 16px;
@@ -516,24 +651,80 @@
             display: inline-block;
             padding: 12px 28px;
             border-radius: 16px;
-            background: linear-gradient(135deg, #cc0000, #990000);
+            background: var(--gradient);
             color: white;
             font-weight: 600;
             text-decoration: none;
             font-size: 15px;
-            transition: all 0.2s;
-            box-shadow: 0 8px 28px rgba(204, 0, 0, 0.12);
+            transition: all 0.3s;
+            box-shadow: 0 8px 28px rgba(99, 102, 241, 0.3);
         }
 
         .support-box .support-contact:hover {
             transform: translateY(-2px);
-            box-shadow: 0 12px 36px rgba(204, 0, 0, 0.2);
+            box-shadow: 0 12px 36px rgba(99, 102, 241, 0.4);
+        }
+
+        /* ===== НАВИГАЦИЯ ===== */
+        .nav {
+            display: flex;
+            gap: 4px;
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .nav-btn {
+            flex: 1;
+            padding: 8px 0;
+            border: none;
+            border-radius: 12px;
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 10px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            line-height: 1.2;
+            position: relative;
+        }
+
+        .nav-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--gradient);
+            transition: width 0.3s;
+            border-radius: 2px;
+        }
+
+        .nav-btn:hover {
+            color: var(--text-secondary);
+        }
+
+        .nav-btn.active {
+            color: #818cf8;
+        }
+
+        .nav-btn.active::after {
+            width: 60%;
+        }
+
+        .nav-btn .icon {
+            display: block;
+            font-size: 16px;
+            margin-bottom: 2px;
         }
 
         /* ===== СТРАНИЦЫ ===== */
         .page {
             display: block;
-            animation: fadeUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: fadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
         .page.hidden {
@@ -541,7 +732,7 @@
         }
 
         @keyframes fadeUp {
-            0% { opacity: 0; transform: translateY(14px); }
+            0% { opacity: 0; transform: translateY(20px); }
             100% { opacity: 1; transform: translateY(0); }
         }
 
@@ -549,14 +740,9 @@
             display: none !important;
         }
 
-        /* ===== СЕКРЕТНЫЙ ТАРИФ ===== */
-        .secret-tariff {
-            display: none;
-        }
-
         /* ===== АДАПТИВ ===== */
         @media (max-width: 480px) {
-            .glass {
+            .glass-card {
                 padding: 24px 18px;
                 border-radius: 32px;
             }
@@ -567,7 +753,7 @@
                 font-size: 56px;
             }
             .card-number {
-                font-size: 15px;
+                font-size: 14px;
                 letter-spacing: 1.5px;
                 flex-wrap: wrap;
                 gap: 8px;
@@ -583,23 +769,20 @@
                 justify-content: space-between;
             }
             .plan-btn {
-                padding: 4px 12px;
-                font-size: 11px;
+                padding: 6px 14px;
+                font-size: 12px;
             }
             .nav-btn {
                 font-size: 9px;
-                padding: 4px 0;
+                padding: 6px 0;
             }
             .nav-btn .icon {
-                font-size: 12px;
-            }
-            .promo-code {
-                font-size: 16px;
+                font-size: 14px;
             }
         }
 
         @media (max-width: 380px) {
-            .glass {
+            .glass-card {
                 padding: 18px 14px;
                 border-radius: 28px;
             }
@@ -610,7 +793,7 @@
                 font-size: 14px;
             }
             .plan-price {
-                font-size: 17px;
+                font-size: 18px;
             }
             .support-box .support-contact {
                 padding: 10px 20px;
@@ -620,6 +803,16 @@
     </style>
 </head>
 <body>
+
+    <!-- ===== АНИМИРОВАННЫЙ ФОН ===== -->
+    <div class="aurora-bg">
+        <div class="aurora aurora-1"></div>
+        <div class="aurora aurora-2"></div>
+        <div class="aurora aurora-3"></div>
+    </div>
+
+    <!-- ===== ЧАСТИЦЫ ===== -->
+    <div class="particles" id="particles"></div>
 
     <!-- ===== ЖИДКОЕ СТЕКЛО ===== -->
     <div class="glass-bg"></div>
@@ -633,7 +826,7 @@
     </div>
 
     <!-- ===== ГЛАВНАЯ КАРТА ===== -->
-    <div class="glass" id="app">
+    <div class="glass-card" id="app">
 
         <!-- ШАПКА -->
         <div class="eyebrow">⚡ МОЛНИЯ VPN</div>
@@ -654,13 +847,13 @@
         <!-- ===== СТРАНИЦА: ГЛАВНАЯ ===== -->
         <div class="page" id="pageHome">
             <div style="text-align: center; padding: 20px 0;">
-                <div style="font-size: 64px; margin-bottom: 12px;">⚡</div>
-                <div style="color: white; font-size: 20px; font-weight: 600;">Мгновенная защита</div>
-                <div style="color: rgba(255,255,255,0.4); font-size: 14px; margin-top: 6px; line-height: 1.6;">
+                <div style="font-size: 64px; margin-bottom: 12px; animation: bounce 2s ease-in-out infinite;">⚡</div>
+                <div style="color: var(--text-primary); font-size: 20px; font-weight: 600;">Мгновенная защита</div>
+                <div style="color: var(--text-secondary); font-size: 14px; margin-top: 6px; line-height: 1.6;">
                     Перейди в «Магазин», чтобы выбрать тариф<br>
                     и получить доступ к VPN
                 </div>
-                <button class="btn-ghost" onclick="switchPage('shop')" style="margin-top: 16px; width: 100%; padding: 14px; border-radius: 60px; border: 1px solid rgba(255,0,0,0.06); background: rgba(255,0,0,0.02); color: rgba(255,255,255,0.5); cursor: pointer; font-size: 14px;">
+                <button class="btn-ghost" onclick="switchPage('shop')" style="margin-top: 16px; width: 100%; padding: 14px; border-radius: 60px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: var(--text-secondary); cursor: pointer; font-size: 14px; transition: all 0.3s;">
                     🛒 Перейти в магазин
                 </button>
             </div>
@@ -682,33 +875,19 @@
                 </div>
             </div>
 
-            <!-- ПЛАТНЫЙ ТАРИФ 67 PRO -->
-            <div class="plan" style="border-color: rgba(255, 0, 0, 0.15);">
+            <!-- ПЛАТНЫЙ ТАРИФ ALIAZ -->
+            <div class="plan" style="border-color: rgba(255, 255, 255, 0.15);">
                 <div class="plan-left">
-                    <span class="plan-title">💎 67 Pro</span>
+                    <span class="plan-title">💎 Aliaz</span>
                     <span class="plan-desc">Максимальная скорость</span>
                 </div>
                 <div class="plan-right">
-                    <span class="plan-price">67 ₽</span>
-                    <button class="plan-btn" onclick="showPayment(67, '67 Pro', 30)">Выбрать</button>
+                    <span class="plan-price">150 ₽</span>
+                    <button class="plan-btn" onclick="showPayment(150, 'Aliaz', 30)">Выбрать</button>
                 </div>
             </div>
 
-            <!-- СЕКРЕТНЫЙ ТАРИФ ЗА 25₽ (СПРЯТАН) -->
-            <div class="secret-tariff" id="secretTariff">
-                <div class="plan" style="border-color: rgba(255, 0, 0, 0.15);">
-                    <div class="plan-left">
-                        <span class="plan-title">🔒 Секретный</span>
-                        <span class="plan-desc">Особый доступ</span>
-                    </div>
-                    <div class="plan-right">
-                        <span class="plan-price">25 ₽</span>
-                        <button class="plan-btn" onclick="showPayment(25, 'Секретный', 30)">Выбрать</button>
-                    </div>
-                </div>
-            </div>
-
-            <button class="btn-ghost" onclick="shareSite()" style="margin-top: 8px; width: 100%; padding: 12px; border-radius: 60px; border: 1px solid rgba(255,0,0,0.06); background: rgba(255,0,0,0.02); color: rgba(255,255,255,0.5); cursor: pointer; font-size: 14px;">
+            <button class="btn-ghost" onclick="shareSite()" style="margin-top: 8px; width: 100%; padding: 12px; border-radius: 60px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: var(--text-secondary); cursor: pointer; font-size: 14px; transition: all 0.3s;">
                 📤 Поделиться с друзьями
             </button>
         </div>
@@ -716,7 +895,7 @@
         <!-- ===== СТРАНИЦА: ИНСТРУКЦИЯ ===== -->
         <div class="page hidden" id="pageHelp">
             <div class="headline" style="font-size: 22px; margin-bottom: 12px;">
-                📖 <span style="color: rgba(255,255,255,0.5); font-weight: 400;">Как добавить подписку</span>
+                📖 <span style="color: var(--text-secondary); font-weight: 400;">Как добавить подписку</span>
             </div>
 
             <div class="instruction" style="margin-top: 0;">
@@ -732,7 +911,7 @@
                 <div class="step"><strong>✅ Готово!</strong> Ты подключён 🎉</div>
             </div>
 
-            <button class="btn-ghost" onclick="shareSite()" style="margin-top: 12px; width: 100%; padding: 12px; border-radius: 60px; border: 1px solid rgba(255,0,0,0.06); background: rgba(255,0,0,0.02); color: rgba(255,255,255,0.5); cursor: pointer; font-size: 14px;">
+            <button class="btn-ghost" onclick="shareSite()" style="margin-top: 12px; width: 100%; padding: 12px; border-radius: 60px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: var(--text-secondary); cursor: pointer; font-size: 14px; transition: all 0.3s;">
                 📤 Поделиться с друзьями
             </button>
         </div>
@@ -740,7 +919,7 @@
         <!-- ===== СТРАНИЦА: ПОДДЕРЖКА ===== -->
         <div class="page hidden" id="pageSupport">
             <div class="headline" style="font-size: 22px; margin-bottom: 12px;">
-                🆘 <span style="color: rgba(255,255,255,0.5); font-weight: 400;">Поддержка</span>
+                🆘 <span style="color: var(--text-secondary); font-weight: 400;">Поддержка</span>
             </div>
 
             <div class="support-box">
@@ -756,19 +935,19 @@
                 </a>
             </div>
 
-            <button class="btn-ghost" onclick="shareSite()" style="margin-top: 12px; width: 100%; padding: 12px; border-radius: 60px; border: 1px solid rgba(255,0,0,0.06); background: rgba(255,0,0,0.02); color: rgba(255,255,255,0.5); cursor: pointer; font-size: 14px;">
+            <button class="btn-ghost" onclick="shareSite()" style="margin-top: 12px; width: 100%; padding: 12px; border-radius: 60px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: var(--text-secondary); cursor: pointer; font-size: 14px; transition: all 0.3s;">
                 📤 Поделиться с друзьями
             </button>
         </div>
 
         <!-- ===== ОПЛАТА ===== -->
         <div id="payment" class="hidden">
-            <div class="plan" style="border-color: rgba(255, 0, 0, 0.15); flex-wrap: wrap; justify-content: center; text-align: center;">
+            <div class="plan" style="border-color: rgba(255, 255, 255, 0.15); flex-wrap: wrap; justify-content: center; text-align: center;">
                 <div style="width: 100%;">
-                    <span style="color: rgba(255,255,255,0.4); font-size: 13px;">Вы выбрали</span>
-                    <div style="color: white; font-weight: 600; font-size: 18px;" id="payTitle">💎 67 Pro</div>
-                    <div style="font-size: 28px; font-weight: 700; color: #ff3333; margin: 4px 0;" id="payPrice">67 ₽</div>
-                    <div style="color: rgba(255,255,255,0.3); font-size: 13px;" id="payDays">30 дней доступа</div>
+                    <span style="color: var(--text-secondary); font-size: 13px;">Вы выбрали</span>
+                    <div style="color: var(--text-primary); font-weight: 600; font-size: 18px;" id="payTitle">💎 Aliaz</div>
+                    <div style="font-size: 28px; font-weight: 700; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin: 4px 0;" id="payPrice">150 ₽</div>
+                    <div style="color: var(--text-muted); font-size: 13px;" id="payDays">30 дней доступа</div>
                 </div>
 
                 <div style="width: 100%; margin-top: 8px;">
@@ -776,7 +955,7 @@
                         <span>💳 2203 8302 5298 4647</span>
                         <button class="btn-copy" id="copyBtn" onclick="copyCard()">📋 Копировать</button>
                     </div>
-                    <div style="color: rgba(255,255,255,0.2); font-size: 12px; text-align: center; margin-bottom: 6px;">МТС Деньги</div>
+                    <div style="color: var(--text-muted); font-size: 12px; text-align: center; margin-bottom: 6px;">МТС Деньги</div>
                 </div>
 
                 <div style="width: 100%;">
@@ -784,7 +963,7 @@
                         ⚠️ <strong>ПЕРЕД ПЕРЕВОДОМ ОБЯЗАТЕЛЬНО НАПИШИТЕ @Fzzrix</strong><br>
                         <span style="font-size: 12px; opacity: 0.6;">ИНАЧЕ ПОДПИСКА НЕ БУДЕТ ВЫДАНА!</span>
                     </div>
-                    <button class="btn-outline" onclick="closePayment()" style="width: 100%; padding: 14px; border-radius: 60px; background: transparent; border: 1px solid rgba(255,0,0,0.08); color: rgba(255,255,255,0.5); cursor: pointer;">← Назад</button>
+                    <button class="btn-outline" onclick="closePayment()" style="width: 100%; padding: 14px; border-radius: 60px; background: transparent; border: 1px solid rgba(255,255,255,0.1); color: var(--text-secondary); cursor: pointer; transition: all 0.3s;">← Назад</button>
                 </div>
             </div>
         </div>
@@ -809,17 +988,52 @@
 
     <script>
         // =============================================
-        // РАКЕТА
+        // ОПТИМИЗАЦИЯ 165 FPS
+        // =============================================
+        
+        const FPS = 165;
+        const frameInterval = 1000 / FPS;
+        let lastFrameTime = 0;
+
+        // =============================================
+        // ЧАСТИЦЫ
+        // =============================================
+        
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 10 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 5) + 's';
+                particle.style.width = particle.style.height = (Math.random() * 4 + 2) + 'px';
+                container.appendChild(particle);
+            }
+        }
+        
+        createParticles();
+
+        // =============================================
+        // РАКЕТА С ПЛАВНОЙ АНИМАЦИЕЙ
         // =============================================
 
         const rocket = document.getElementById('rocket');
         let x = 30,
             y = 30;
-        let dx = 1.2,
-            dy = -1.0;
+        let dx = 1.5,
+            dy = -1.2;
         let angle = 0;
 
-        function animateRocket() {
+        function animateRocket(timestamp) {
+            if (timestamp - lastFrameTime < frameInterval) {
+                requestAnimationFrame(animateRocket);
+                return;
+            }
+            lastFrameTime = timestamp;
+
             const w = window.innerWidth - 120;
             const h = window.innerHeight - 120;
 
@@ -833,12 +1047,12 @@
             const rot = Math.atan2(dy, dx) * (180 / Math.PI);
 
             rocket.style.transform =
-                `translate(${x}px, ${y}px) rotate(${rot}deg) scale(${1 + Math.sin(angle * 0.03) * 0.04})`;
+                `translate3d(${x}px, ${y}px, 0) rotate(${rot}deg) scale(${1 + Math.sin(angle * 0.03) * 0.05})`;
 
             requestAnimationFrame(animateRocket);
         }
 
-        animateRocket();
+        requestAnimationFrame(animateRocket);
 
         // =============================================
         // СЧЁТЧИК
@@ -913,10 +1127,10 @@
 
         function showFree() {
             playClick();
-            const vpnLink = 'https://tri.su/MlOdp';
+            const vpnLink = 'https://tri.su/z0Kg5';
             
             const freeText = 
-                '🎉 **Бесплатный тариф**\n\n' +
+                '🎉 Бесплатный тариф\n\n' +
                 '🔗 Твоя ссылка на VPN:\n' + vpnLink + '\n\n' +
                 '📲 Как подключить:\n' +
                 '1. Скачай Happ Proxy Utility\n' +
@@ -925,9 +1139,8 @@
                 '4. Выбери сервер\n' +
                 '5. Готово!';
             
-            alert(freeText.replace(/\*\*/g, ''));
+            alert(freeText);
             
-            // Копируем ссылку
             navigator.clipboard.writeText(vpnLink).catch(() => {});
         }
 
@@ -943,8 +1156,8 @@
             document.getElementById('payment').classList.remove('hidden');
 
             setTimeout(() => {
-                document.querySelector('.glass').scrollTo({
-                    top: document.querySelector('.glass').scrollHeight,
+                document.querySelector('.glass-card').scrollTo({
+                    top: document.querySelector('.glass-card').scrollHeight,
                     behavior: 'smooth'
                 });
             }, 200);
@@ -1008,28 +1221,7 @@
                 window.open(`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encoded}`, '_blank');
             }
         }
-
-        // =============================================
-        // СЕКРЕТНЫЙ ТАРИФ (СПРЯТАН)
-        // =============================================
-
-        // Чтобы открыть секретный тариф за 25₽:
-        // 1. Нажми 5 раз на счётчик "Сейчас с нами"
-        // 2. Или введи в консоли: showSecretTariff()
-
-        let secretClicks = 0;
-        document.querySelector('.counter').addEventListener('click', function() {
-            secretClicks++;
-            if (secretClicks >= 5) {
-                document.getElementById('secretTariff').style.display = 'block';
-                secretClicks = 0;
-            }
-        });
-
-        function showSecretTariff() {
-            document.getElementById('secretTariff').style.display = 'block';
-        }
     </script>
 
 </body>
-</html>
+</html></html>
